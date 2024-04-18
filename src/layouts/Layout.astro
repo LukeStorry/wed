@@ -1,5 +1,6 @@
 ---
 import "@fontsource/berkshire-swash";
+import { ViewTransitions } from "astro:transitions";
 
 interface Props {
   title?: string;
@@ -7,6 +8,21 @@ interface Props {
 }
 
 const { title, nextPage } = Astro.props;
+
+const duration = "0.6s";
+const rotate = {
+  old: {
+    name: "spinOut",
+    duration,
+    easing: "ease-in",
+  },
+  new: {
+    name: "spinIn",
+    duration,
+    delay: duration,
+    easing: "ease-out",
+  },
+};
 ---
 
 <!doctype html>
@@ -24,14 +40,16 @@ const { title, nextPage } = Astro.props;
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="generator" content={Astro.generator} />
     <title>Luke & Marnie's wedding {title ? ` - ${title}` : null}</title>
+    <ViewTransitions />
   </head>
   <body
+    transition:animate={{ forwards: rotate, backwards: rotate }}
     class="p-4 md:p-8 lg:p-16 bg-green-800 flex items-center justify-center h-svh w-screen"
   >
     <a
       href={nextPage}
       class="max-h-full w-full sm:w-auto sm:h-full aspect-[1220/2000] p-2 rounded-lg border-2
-        border-black bg-white"
+        border-black bg-white hover:animate-spin-tease drop-shadow-2xl shadow-2xl"
     >
       <slot />
     </a>
