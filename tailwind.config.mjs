@@ -6,7 +6,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Berkshire Swash", ...defaultTheme.fontFamily.sans],
+        sans: ["arvo", ...defaultTheme.fontFamily.sans],
       },
       keyframes: {
         spinTease: {

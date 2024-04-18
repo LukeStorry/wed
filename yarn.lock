@@ -584,10 +584,10 @@
   resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.20.2.tgz#9c907b21e30a52db959ba4f80bb01a0cc403d5cc"
   integrity sha512-N49X4lJX27+l9jbLKSqZ6bKNjzQvHaT8IIFUy+YIqmXQdjYCToGWwOItDrfby14c78aDd5NHQl29xingXfCdLQ==
 
-"@fontsource/berkshire-swash@^5.0.19":
-  version "5.0.19"
-  resolved "https://registry.yarnpkg.com/@fontsource/berkshire-swash/-/berkshire-swash-5.0.19.tgz#758dff8753adf44077ff39c5ff36adaafea66e7d"
-  integrity sha512-/uc1W1+YSF8Dp+01w0aWkuXJcIOIOVwFkUsVD+7tOjjp7plM+Apzf4khK+7C4whlaioQuz2NNk22BNmBGzpmYg==
+"@fontsource/arvo@^5.0.18":
+  version "5.0.18"
+  resolved "https://registry.yarnpkg.com/@fontsource/arvo/-/arvo-5.0.18.tgz#12316a3bedb9870a49c631416840b3a3575a6b75"
+  integrity sha512-XrqhVm7mg96jlPlh0Ho3zC9t+m7QvODs/pBWcuLT0ueVVfuKbJ2tcft4zaEDNdUd6iTYFemlBwSsHfUpWDwkXg==
 
 "@isaacs/cliui@^8.0.2":
   version "8.0.2"
