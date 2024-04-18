@@ -1,0 +1,32 @@
+---
+import { Image } from "astro:assets";
+
+import flower_1 from "../images/flower_1.jpg";
+import flower_2 from "../images/flower_2.jpg";
+import flower_3 from "../images/flower_3.jpg";
+import flower_4 from "../images/flower_4.jpg";
+import flower_5 from "../images/flower_5.jpg";
+import flower_6 from "../images/flower_6.jpg";
+import flower_7 from "../images/flower_7.jpg";
+import flower_8 from "../images/flower_8.jpg";
+
+const flowers = [
+  flower_1,
+  flower_2,
+  flower_3,
+  flower_4,
+  flower_5,
+  flower_6,
+  flower_7,
+  flower_8,
+];
+
+const randomNumber = Math.floor(Math.random() * flowers.length);
+const randomFlower = flowers[randomNumber]!;
+---
+
+<Image
+  src={randomFlower}
+  class="object-contain w-full h-full rounded-xl"
+  alt="An illustration of a flower, from a RHS postcard."
+/>
