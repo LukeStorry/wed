@@ -1,9 +1,10 @@
 ---
 interface Props {
-  title: string;
+  title?: string;
+  nextPage: string;
 }
 
-const { title } = Astro.props;
+const { title, nextPage } = Astro.props;
 ---
 
 <!doctype html>
@@ -22,7 +23,15 @@ const { title } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>Luke & Marnie's wedding {title ? ` - ${title}` : null}</title>
   </head>
-  <body>
-    <slot />
+  <body
+    class="p-4 md:p-8 lg:p-16 bg-green-800 flex items-center justify-center h-screen w-screen"
+  >
+    <a
+      href={nextPage}
+      class="max-h-full w-full sm:w-auto sm:h-full aspect-[1220/2000] p-2 rounded-lg border-2
+        border-black bg-white"
+    >
+      <slot />
+    </a>
   </body>
 </html>
