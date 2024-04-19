@@ -1,18 +1,13 @@
 ---
 import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
-import Postcard from "../components/Postcard.astro";
 import saveTheDate from "../images/save_the_date.png";
 ---
 
-<Layout title="Info">
-  <Postcard href="/">
-    <div class="p-12">
-      <Image
-        src={saveTheDate}
-        class="object-contain"
-        alt="Luke and Marnie are getting Married. Save the Date: 14th June 2025. Widemouth Bay, Cornwall. More info to come."
-      />
-    </div>
-  </Postcard>
+<Layout title="Info" nextPage="/">
+  <Image
+    src={saveTheDate}
+    class="object-contain w-full h-full rounded-xl"
+    alt="Luke and Marnie are getting Married. Save the Date: 14th June 2025. Widemouth Bay, Cornwall. More info to come."
+  />
 </Layout>

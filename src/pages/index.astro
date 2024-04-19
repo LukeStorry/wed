@@ -1,11 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import FlowerImage from "../components/FlowerImage.astro";
-import Postcard from "../components/Postcard.astro";
 ---
 
-<Layout>
-  <Postcard href="info">
-    <FlowerImage />
-  </Postcard>
+<Layout nextPage="info">
+  <FlowerImage />
 </Layout>
