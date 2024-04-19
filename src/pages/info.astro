@@ -1,19 +1,13 @@
 ---
+import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
+import saveTheDate from "../images/save_the_date.png";
 ---
 
 <Layout title="Info" nextPage="/">
-  <div
-    class="text-center flex flex-col justify-around h-full text-xl sm:text-2xl"
-  >
-    <div>
-      <p class="text-3xl sm:text-5xl">Luke & Marnie</p>
-      <p class="mt-6 text-2xl sm:text-4xl">are getting Married!</p>
-    </div>
-    <div>
-      <p>14th June 2025</p>
-      <p class="m-6">Widemouth Bay, Cornwall</p>
-    </div>
-    <p>More info to come...</p>
-  </div>
+  <Image
+    src={saveTheDate}
+    class="object-contain w-full h-full rounded-xl"
+    alt="Luke and Marnie are getting Married. Save the Date: 14th June 2025. Widemouth Bay, Cornwall. More info to come."
+  />
 </Layout>
