@@ -11,14 +11,14 @@ export default {
       keyframes: {
         spinTease: {
           "0%, 100%": { transform: "rotateY(0deg)" },
-          "50%": { transform: "rotateY(20deg) skewY(1deg)" },
+          "50%": { transform: "rotateY(20deg) skewY(7deg)" },
         },
         spinOut: {
           "0%": { transform: "rotateY(0deg)" },
-          "100%": { transform: "rotateY(90deg) skewY(6deg)" },
+          "100%": { transform: "rotateY(90deg) skewY(16deg)" },
         },
         spinIn: {
-          "0%": { transform: "rotateY(270deg) skewY(-6deg)" },
+          "0%": { transform: "rotateY(270deg) skewY(-16deg)" },
           "100%": { transform: "rotateY(360deg)" },
         },
       },
