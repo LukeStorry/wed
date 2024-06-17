@@ -1,26 +1,81 @@
 ---
 import { Image } from "astro:assets";
 
-import flower_1 from "../images/flower_1.jpg";
-import flower_2 from "../images/flower_2.jpg";
-import flower_3 from "../images/flower_3.jpg";
-import flower_4 from "../images/flower_4.jpg";
-import flower_5 from "../images/flower_5.jpg";
-import flower_6 from "../images/flower_6.jpg";
-import flower_7 from "../images/flower_7.jpg";
-import flower_8 from "../images/flower_8.jpg";
+import flower_01 from "../images/flower_01.jpg";
+import flower_02 from "../images/flower_02.jpg";
+import flower_03 from "../images/flower_03.jpg";
+import flower_04 from "../images/flower_04.jpg";
+import flower_05 from "../images/flower_05.jpg";
+import flower_06 from "../images/flower_06.jpg";
+import flower_07 from "../images/flower_07.jpg";
+import flower_08 from "../images/flower_08.jpg";
+import flower_09 from "../images/flower_09.jpg";
+import flower_10 from "../images/flower_10.jpg";
+import flower_11 from "../images/flower_11.jpg";
+import flower_12 from "../images/flower_12.jpg";
+import flower_13 from "../images/flower_13.jpg";
+import flower_14 from "../images/flower_14.jpg";
+import flower_15 from "../images/flower_15.jpg";
+import flower_16 from "../images/flower_16.jpg";
+import flower_17 from "../images/flower_17.jpg";
+import flower_18 from "../images/flower_18.jpg";
+import flower_19 from "../images/flower_19.jpg";
+import flower_20 from "../images/flower_20.jpg";
+import flower_21 from "../images/flower_21.jpg";
+import flower_22 from "../images/flower_22.jpg";
+import flower_23 from "../images/flower_23.jpg";
+import flower_24 from "../images/flower_24.jpg";
+import flower_25 from "../images/flower_25.jpg";
+import flower_26 from "../images/flower_26.jpg";
+import flower_27 from "../images/flower_27.jpg";
+import flower_28 from "../images/flower_28.jpg";
+import flower_29 from "../images/flower_29.jpg";
+import flower_30 from "../images/flower_30.jpg";
+import flower_31 from "../images/flower_31.jpg";
+import flower_32 from "../images/flower_32.jpg";
+import flower_33 from "../images/flower_33.jpg";
+import flower_34 from "../images/flower_34.jpg";
+import flower_35 from "../images/flower_35.jpg";
+import flower_36 from "../images/flower_36.jpg";
 
 const flowers = [
-  flower_1,
-  flower_2,
-  flower_3,
-  flower_4,
-  flower_5,
-  flower_6,
-  flower_7,
-  flower_8,
+  flower_01,
+  flower_02,
+  flower_03,
+  flower_04,
+  flower_05,
+  flower_06,
+  flower_07,
+  flower_08,
+  flower_09,
+  flower_10,
+  flower_11,
+  flower_12,
+  flower_13,
+  flower_14,
+  flower_15,
+  flower_16,
+  flower_17,
+  flower_18,
+  flower_19,
+  flower_20,
+  flower_21,
+  flower_22,
+  flower_23,
+  flower_24,
+  flower_25,
+  flower_26,
+  flower_27,
+  flower_28,
+  flower_29,
+  flower_30,
+  flower_31,
+  flower_32,
+  flower_33,
+  flower_34,
+  flower_35,
+  flower_36,
 ];
-
 const randomNumber = Math.floor(Math.random() * flowers.length);
 const randomFlower = flowers[randomNumber]!;
 ---
@@ -29,4 +84,11 @@ const randomFlower = flowers[randomNumber]!;
   src={randomFlower}
   class="object-contain w-full h-full rounded-xl"
   alt="An illustration of a flower, from a RHS postcard."
+  
 />
+
+{
+  flowers.map((flower) => (
+    <Image alt="other flowers" src={flower} class="hidden" />
+  ))
+}
