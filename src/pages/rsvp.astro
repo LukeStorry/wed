@@ -1,0 +1,9 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const code = Astro.url.searchParams.get("code");
+---
+
+<Layout>
+  {code ? <div>{code}</div> : <input type="text" placeholder="Enter Search" />}
+</Layout>
