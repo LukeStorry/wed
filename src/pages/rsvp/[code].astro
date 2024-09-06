@@ -1,0 +1,12 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const { code } = Astro.params;
+// TODO redirect if no code
+// TODO search code for details
+// TODO redirect if code serach matches nothing
+---
+
+<Layout>
+  {code ? <div>CORRECT PASSWORD, YOUR CODE IS: {code}</div> : <p>not yet</p>}
+</Layout>
