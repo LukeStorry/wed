@@ -1,9 +1,57 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
+const errors = { name: "", password: "" };
+
 const code = Astro.url.searchParams.get("code");
+
+if (Astro.request.method === "POST") {
+  const formData = await Astro.request.formData();
+  const name = formData.get("name");
+  const password = formData.get("password");
+  console.log(`RSVP Login Form Submitted: ${{ name, password }}`);
+
+  if (
+    !password ||
+    typeof password !== "string" ||
+    password.toLowerCase() !== "eddy"
+  ) {
+    errors.password = "Incorrect password, give us a text!";
+  }
+
+  // TODO lookup code using search API, mock for now
+  const code = name?.valueOf().toString().toUpperCase() || "";
+
+  if (!code) {
+    errors.name = "Not found, please try again";
+  }
+
+  const hasErrors = Object.values(errors).some((msg) => msg);
+  if (!hasErrors) {
+    return Astro.redirect(`/rsvp?code=${code}`);
+  }
+}
 ---
 
 <Layout>
-  {code ? <div>{code}</div> : <input type="text" placeholder="Enter Search" />}
+  {
+    code ? (
+      <div>CORRECT PASSWORD, YOUR CODE IS: {code}</div>
+    ) : (
+      <form action="/rsvp" method="POST">
+        <label>
+          Your name:
+          <input type="text" name="name" minlength="6" required />
+        </label>
+        {errors.name && <p>{errors.name}</p>}
+
+        <label>
+          Password:
+          <input type="text" name="password" required />
+        </label>
+        {errors.password && <p>{errors.password}</p>}
+        <button type="submit">Search</button>
+      </form>
+    )
+  }
 </Layout>
