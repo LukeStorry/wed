@@ -43,9 +43,9 @@ if (Astro.request.method === "POST") {
   <form
     action="/rsvp"
     method="POST"
-    class="w-full flex flex-col justify-around items-center pr-4 align-middle h-full pt-12 pb-24"
+    class="flex h-full w-full flex-col items-center justify-around pb-24 pr-4 pt-12 align-middle"
   >
-    <h2 class="font-bold text-xl">Login</h2>
+    <h2 class="text-xl font-bold">Login</h2>
     <div>
       <label class="block" for="name">Name</label>
       <input name="name" type="text" />
@@ -59,7 +59,7 @@ if (Astro.request.method === "POST") {
     </div>
 
     <button
-      class="font-bold text-lg border rounded text-white p-2 bg-green-900"
+      class="rounded border bg-green-900 p-2 text-lg font-bold text-white"
       type="submit"
     >
       Enter
