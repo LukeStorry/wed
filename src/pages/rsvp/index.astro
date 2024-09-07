@@ -1,40 +1,53 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import { z } from "zod";
+const PASSWORD = import.meta.env.PASSWORD;
+
 const errors = { name: "", password: "" };
 
 if (Astro.request.method === "POST") {
-  console.log("RSVP POST Received");
+  console.log("Login POST Received", PASSWORD);
+  const schema = z.object({
+    name: z
+      .string()
+      .min(5, "Please enter your name")
+      .refine((val) => val.includes(" "), {
+        message: "Please enter your full name",
+      }),
+    password: z
+      .string()
+      .min(2, "Please enter a password")
+      .refine((val) => val.toLowerCase() === PASSWORD, {
+        message: "Incorrect password, sorry!",
+      }),
+  });
 
-  const formData = await Astro.request.formData();
-  const name = formData.get("name");
-  const password = formData.get("password");
+  const formData = Object.fromEntries(
+    (await Astro.request.formData()).entries()
+  );
+  console.log(`Login Attempt: ${JSON.stringify(formData)}`);
+  const result = schema.safeParse(formData);
 
-  console.log(`Login Attempt: ${name}, ${password}`);
-
-  if (!name || typeof name !== "string") {
-    errors.name = "Please enter your name";
-  } else if (name.length < 5 || !name.includes(" ")) {
-    errors.name = "Please enter your full name";
-  }
-
-  if (!password || typeof password !== "string" || password.length < 2) {
-    errors.password = "Please enter a password";
-  } else if (password.toLowerCase() !== import.meta.env.PASSWORD) {
-    errors.password = "Incorrect password, sorry! Give Marnie/Luke a text!";
-  }
-  // TODO lookup code using search API, mock for now
-  const code = name?.valueOf().toString().toUpperCase() || "";
-
-  if (!code) {
-    errors.name = "Not found, please try again";
-  }
-
-  const hasErrors = Object.values(errors).some((msg) => msg);
-  if (hasErrors) {
-    console.error(`RSVP Login Failed: ${name}, ${password}`);
+  if (!result.success) {
+    errors.name = result.error?.formErrors.fieldErrors.name?.[0] ?? "";
+    errors.password = result.error?.formErrors.fieldErrors.password?.[0] ?? "";
   } else {
-    console.log(`RSVP Login Succeed: ${name}, ${code}`);
-    return Astro.redirect(`/rsvp/${code}`);
+    const { name } = result.data;
+    
+    // TODO lookup code using search API, mock for now
+    const code = "abcdef";
+
+    if (!code) {
+      errors.name = "Not found, please try again.";
+    }
+
+    const hasErrors = Object.values(errors).some((msg) => msg);
+    if (hasErrors) {
+      console.error(`RSVP Login Failed: ${JSON.stringify(errors)}`);
+    } else {
+      console.log(`RSVP Login Succeed: ${name}, ${code}`);
+      return Astro.redirect(`/rsvp/${code}`);
+    }
   }
 }
 ---
