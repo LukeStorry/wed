@@ -64,13 +64,18 @@ if (Astro.request.method === "POST") {
     <h2 class="text-xl font-bold">Login</h2>
     <div>
       <label class="block" for="name">Name</label>
-      <input name="name" value={data?.name} type="text" />
+      <input name="name" value={data?.name} class="rounded" type="text" />
       {errors.name && <p class="text-sm text-red-400">{errors.name}</p>}
     </div>
 
     <div>
       <label class="block" for="password"> Password </label>
-      <input name="password" value={data?.password} type="text" />
+      <input
+        name="password"
+        value={data?.password}
+        class="rounded"
+        type="text"
+      />
       {errors.password && <p class="text-sm text-red-400">{errors.password}</p>}
     </div>
 
