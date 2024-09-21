@@ -24,7 +24,7 @@ const errors: D = { name: "", password: "" };
 const data: D = { name: "", password: "" };
 
 if (Astro.request.method === "POST") {
-  console.log("Login POST Received", PASSWORD);
+  console.log("Login POST Received");
 
   const formData = Object.fromEntries(
     (await Astro.request.formData()).entries()

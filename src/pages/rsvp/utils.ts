@@ -1,5 +1,6 @@
 import { JWT } from "google-auth-library";
 import { GoogleSpreadsheet, GoogleSpreadsheetRow } from "google-spreadsheet";
+import _ from "lodash";
 import { z } from "zod";
 
 const { SPREADSHEET_ID, GOOGLE_SERVICE_ACCOUNT_EMAIL, GOOGLE_PRIVATE_KEY } =
@@ -8,7 +9,7 @@ const { SPREADSHEET_ID, GOOGLE_SERVICE_ACCOUNT_EMAIL, GOOGLE_PRIVATE_KEY } =
 const schema = z.object({
   code: z.string().min(5).max(5),
   name: z.string().min(2),
-  attending: z.enum(["yes", "no", "maybe"]),
+  attending: z.enum(["yes", "no", "maybe"]).optional(),
   diet: z.string().optional(),
   accommodation: z.string().optional(),
 });
@@ -58,4 +59,34 @@ export async function getRowsFromCode(code: string): Promise<Row[]> {
 
     return check.data;
   });
+}
+
+async function updateRow(data: Row): Promise<void> {
+  const rows = await getData();
+  const row = rows.find(
+    (r) => r.get("code") === data.code && r.get("name") === data.name,
+  );
+  if (!row) throw new Error(`Row for ${data.name} not found`);
+  row.assign(data);
+  await row.save();
+}
+
+export async function handleUpdateForm(formData: FormData): Promise<void> {
+  console.log(formData);
+
+  // We've got multiple objects with prepended indexes, so unpack into objects
+  const keyValuePairs = [...formData.entries()];
+
+  const updates: unknown[] = [];
+  keyValuePairs.forEach(([k, v]) => _.set(updates, k, v));
+  console.log(updates);
+
+  for (const update of updates) {
+    const result = schema.safeParse(update);
+    if (!result.success) {
+      console.error(update);
+      throw new Error("Bad FormData?", { cause: result.error.format() });
+    }
+    await updateRow(result.data);
+  }
 }
