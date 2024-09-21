@@ -1,12 +1,69 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import { getRowsFromCode } from "./utils";
 
 const { code } = Astro.params;
-// TODO redirect if no code
-// TODO search code for details
-// TODO redirect if code serach matches nothing
+if (!code || typeof code !== "string") {
+  return Astro.redirect("/rsvp");
+}
+
+const people = await getRowsFromCode(code);
+if (!people?.length) {
+  return new Response(
+    "Sorry something has gone wrong, please send Luke a message."
+  );
+}
 ---
 
 <Layout>
-  {code ? <div>CORRECT PASSWORD, YOUR CODE IS: {code}</div> : <p>not yet</p>}
+  <div class="max-h-full overflow-scroll">
+    <h1 class="pr-2 text-center text-2xl font-bold">RSVP</h1>
+    <section>
+      {
+        people.map((person) => (
+          <div class="m-2 flex flex-col rounded border-4 p-2">
+            {/* TODO add a form here?? */}
+            <h2 class="text-lg font-bold">{person.name}</h2>
+            <p> Coming: {person.attending}</p>
+            <p> Dietary: {person.diet ?? "-"}</p>
+          </div>
+        ))
+      }
+    </section>
+    <hr />
+
+    <div class="m-2 rounded border-4 p-2">
+      <div class="grid grid-cols-2">
+        <div>
+          <h2 class="text-lg font-bold">Location</h2>
+          <p class="pt-2">
+            OA Surf Club,<br /> Atlantic Court, Widemouth Bay, Cornwall,
+            <strong>EX23 0DF</strong>
+          </p>
+        </div>
+        <div>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10089.620279026898!2d-4.569662926881236!3d50.786601196530285!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x486c77bce0d2d9ff%3A0x24f9b527d994a22f!2sOA%20Surf%20Club%20-%20Accommodation%2C%20Widemouth%20Bay%2C%20Bude%2C%20Cornwall!5e0!3m2!1sen!2suk!4v1726951071494!5m2!1sen!2suk"
+            class="w-full rounded-lg"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <div class="m-2 flex flex-col rounded border-4 p-2">
+      <h2 class="text-lg font-bold">Accomodation</h2>
+      {
+        people.some((p) => p.accommodation == "?")
+          ? "We have a hostel full of rooms, give us a text to get involved!"
+          : people.some((p) => p.accommodation?.includes("hostel"))
+            ? `You're down to stay in: ${people[0]?.accommodation}`
+            : "There are loads of B&Bs in Widemouth, and a caravan park too!"
+      }
+    </div>
+  </div>
+
+  <script define:vars={{ people }}>
+    console.log(JSON.stringify(people, null, 2));
+  </script>
 </Layout>

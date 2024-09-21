@@ -8,7 +8,7 @@ const { SPREADSHEET_ID, GOOGLE_SERVICE_ACCOUNT_EMAIL, GOOGLE_PRIVATE_KEY } =
 const schema = z.object({
   code: z.string().min(5).max(5),
   name: z.string().min(2),
-  attending: z.boolean().optional(),
+  attending: z.enum(["yes", "no", "maybe"]),
   diet: z.string().optional(),
   accommodation: z.string().optional(),
 });
@@ -25,6 +25,7 @@ async function getData(): Promise<GoogleSpreadsheetRow<Row>[]> {
   });
 
   const doc = new GoogleSpreadsheet(SPREADSHEET_ID, serviceAccountAuth);
+  await doc.loadInfo();
   const sheet = doc.sheetsByTitle["AppData"];
   if (!sheet)
     throw new Error(`Unable to find AppData Sheet on ${SPREADSHEET_ID}"`);
@@ -38,4 +39,23 @@ export async function getCodeFromName(name: string): Promise<string | null> {
   const rows = await getData();
   const row = rows.find((r) => r.get("name").includes(name));
   return row?.get("code") ?? null;
+}
+
+export async function getRowsFromCode(code: string): Promise<Row[]> {
+  const rows = await getData();
+  const applicable = rows.filter((r) => r.get("code") === code);
+  if (applicable.length === 0) return [];
+
+  return applicable.map((r) => {
+    const row = r.toObject();
+
+    // Let's just validate the data before returning it, for FE sanity
+    const check = schema.safeParse(row);
+    if (!check.success)
+      throw new Error(`Bad Sheet Data!? ${JSON.stringify(r.toObject())}`, {
+        cause: check.error.format(),
+      });
+
+    return check.data;
+  });
 }
