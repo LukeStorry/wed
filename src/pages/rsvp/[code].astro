@@ -25,6 +25,8 @@ if (!people?.length) {
 <Layout>
   <div class="flex h-full flex-col justify-around overflow-scroll">
     <h1 class="pr-2 text-center text-2xl font-bold">RSVP</h1>
+
+    <!-- // PEOPLE FORM -->
     <form class="" action=`/rsvp/${code}` method="POST">
       {
         people.map(({ name, attending, diet }, i) => (
@@ -35,6 +37,8 @@ if (!people?.length) {
             <h2 class="text-lg font-bold">{name}</h2>
             <div class="m-2 flex gap-2">
               {/* justify-evenly */}
+
+              {/* <!-- YES RADIO INPUT  --> */}
               <label
                 class:list={[
                   "rounded p-2 has-[:checked]:bg-green-800 has-[:checked]:text-white",
@@ -52,6 +56,8 @@ if (!people?.length) {
                   checked={attending == "yes"}
                 />
               </label>
+
+              {/* <!-- NO RADIO INPUT  --> */}
               <label
                 class:list={[
                   "rounded p-2 has-[:checked]:bg-red-500",
@@ -71,6 +77,8 @@ if (!people?.length) {
               </label>
             </div>
 
+            {/* <!-- DIETARY INPUT  --> */}
+
             {attending == "yes" && (
               <input
                 class="m-2 ml-2 rounded p-2"
@@ -84,6 +92,8 @@ if (!people?.length) {
           </div>
         ))
       }
+      <!-- END OF FORM  -->
+
       <button
         class="ml-36 hidden rounded border bg-green-900 p-2 font-bold text-white"
         type="submit"
@@ -93,9 +103,13 @@ if (!people?.length) {
 
     <hr />
 
+    <!-- DETAILS SECTION  -->
+
     {
       people.some((p) => p.attending == "yes") && (
         <section>
+          {/* <!-- LOCATION INFO  --> */}
+
           <div class="m-2 rounded p-2">
             <h2 class="text-lg font-bold">Location</h2>
             <div class="grid grid-cols-2">
@@ -116,6 +130,8 @@ if (!people?.length) {
               </div>
             </div>
           </div>
+
+          {/* <!-- ACCOMODATION INFO  --> */}
 
           <div class="m-2 flex flex-col rounded p-2">
             <h2 class="text-lg font-bold">Accomodation</h2>
