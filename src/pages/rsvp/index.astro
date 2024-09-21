@@ -3,24 +3,26 @@ import Layout from "../../layouts/Layout.astro";
 import { z } from "zod";
 const PASSWORD = import.meta.env.PASSWORD;
 
-const errors = { name: "", password: "" };
+const schema = z.object({
+  name: z
+    .string()
+    .min(5, "Please enter your name")
+    .refine((val) => val.includes(" "), {
+      message: "Please enter your full name",
+    }),
+  password: z
+    .string()
+    .min(2, "Please enter a password")
+    .refine((val) => val.toLowerCase() === PASSWORD, {
+      message: "Incorrect password, sorry!",
+    }),
+});
+type D = z.infer<typeof schema>;
+const errors: D = { name: "", password: "" };
+const data: D = { name: "", password: "" };
 
 if (Astro.request.method === "POST") {
   console.log("Login POST Received", PASSWORD);
-  const schema = z.object({
-    name: z
-      .string()
-      .min(5, "Please enter your name")
-      .refine((val) => val.includes(" "), {
-        message: "Please enter your full name",
-      }),
-    password: z
-      .string()
-      .min(2, "Please enter a password")
-      .refine((val) => val.toLowerCase() === PASSWORD, {
-        message: "Incorrect password, sorry!",
-      }),
-  });
 
   const formData = Object.fromEntries(
     (await Astro.request.formData()).entries()
@@ -29,11 +31,11 @@ if (Astro.request.method === "POST") {
   const result = schema.safeParse(formData);
 
   if (!result.success) {
+    data.name = formData.name?.toString() ?? "";
     errors.name = result.error?.formErrors.fieldErrors.name?.[0] ?? "";
     errors.password = result.error?.formErrors.fieldErrors.password?.[0] ?? "";
   } else {
     const { name } = result.data;
-    
     // TODO lookup code using search API, mock for now
     const code = "abcdef";
 
@@ -61,13 +63,13 @@ if (Astro.request.method === "POST") {
     <h2 class="text-xl font-bold">Login</h2>
     <div>
       <label class="block" for="name">Name</label>
-      <input name="name" type="text" />
+      <input name="name" value={data?.name} type="text" />
       {errors.name && <p class="text-sm text-red-400">{errors.name}</p>}
     </div>
 
     <div>
       <label class="block" for="password"> Password </label>
-      <input name="password" type="text" />
+      <input name="password" value={data?.password} type="text" />
       {errors.password && <p class="text-sm text-red-400">{errors.password}</p>}
     </div>
 
