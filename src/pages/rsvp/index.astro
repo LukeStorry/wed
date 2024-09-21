@@ -1,6 +1,8 @@
 ---
-import Layout from "../../layouts/Layout.astro";
 import { z } from "zod";
+import Layout from "../../layouts/Layout.astro";
+import { getCodeFromName } from "./utils";
+
 const PASSWORD = import.meta.env.PASSWORD;
 
 const schema = z.object({
@@ -36,8 +38,7 @@ if (Astro.request.method === "POST") {
     errors.password = result.error?.formErrors.fieldErrors.password?.[0] ?? "";
   } else {
     const { name } = result.data;
-    // TODO lookup code using search API, mock for now
-    const code = "abcdef";
+    const code = await getCodeFromName(name);
 
     if (!code) {
       errors.name = "Not found, please try again.";
