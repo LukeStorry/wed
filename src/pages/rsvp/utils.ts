@@ -38,7 +38,9 @@ async function getData(): Promise<GoogleSpreadsheetRow<Row>[]> {
 
 export async function getCodeFromName(name: string): Promise<string | null> {
   const rows = await getData();
-  const row = rows.find((r) => r.get("name").includes(name));
+  const row = rows.find((r) =>
+    String(r.get("name")).toLowerCase().includes(name.toLowerCase()),
+  );
   return row?.get("code") ?? null;
 }
 
