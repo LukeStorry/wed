@@ -106,7 +106,7 @@ if (!people?.length) {
     <!-- DETAILS SECTION  -->
 
     {
-      people.some((p) => p.attending == "yes") && (
+      people.some((p) => p.attending == "yes") ? (
         <section>
           {/* <!-- LOCATION INFO  --> */}
 
@@ -142,6 +142,8 @@ if (!people?.length) {
                 : "There are loads of B&Bs near Widemouth Bay, and a caravan park at the end of the road. Give us a call if you want a hand!"}
           </div>
         </section>
+      ) : (
+        <div class="h-96" />
       )
     }
   </div>
