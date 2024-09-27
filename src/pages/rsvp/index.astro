@@ -59,9 +59,9 @@ if (Astro.request.method === "POST") {
   <form
     action="/rsvp"
     method="POST"
-    class="flex h-full w-full flex-col items-center justify-around pb-24 pr-4 pt-12 align-middle sm:h-3/4"
+    class="flex h-full w-full flex-col items-center justify-around gap-8 pb-24 pr-4 pt-12 align-middle sm:h-3/4"
   >
-    <h2 class="text-xl font-bold">Login</h2>
+    <h2 class="text-xl font-bold">RSVP</h2>
     <div>
       <label class="block" for="name">Your full name</label>
       <!-- <p class="text-xs font-light italic text-gray-400">Full name</p> -->
@@ -88,5 +88,6 @@ if (Astro.request.method === "POST") {
     >
       Enter
     </button>
+    <div class="mb-48 sm:mb-0"></div>
   </form>
 </Layout>
