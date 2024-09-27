@@ -24,6 +24,10 @@ if (!people?.length) {
 const stayingInHostel = people.some((p) => !!p.accommodation);
 ---
 
+<script define:vars={{ people }}>
+  console.log(JSON.stringify(people, null, 2));
+</script>
+
 <Layout>
   <div class="flex h-full flex-col justify-around overflow-scroll">
     <h1 class="pr-2 text-center text-2xl font-bold">RSVP</h1>
@@ -97,10 +101,36 @@ const stayingInHostel = people.some((p) => !!p.accommodation);
       <!-- END OF FORM  -->
 
       <button
-        class="ml-36 rounded border bg-green-900 p-2 font-bold text-white"
+        class="mb-3 ml-4 rounded border p-1 text-sm font-bold"
         type="submit"
-        >Update
+        onclick="onSubmit()"
+        >Save
       </button>
+
+      <script is:inline>
+        // Highlight the button if there are changes
+        document.querySelectorAll("input").forEach((input) => {
+          input.addEventListener("change", onChange);
+          input.addEventListener("blur", onChange);
+        });
+
+        function onChange() {
+          document
+            .querySelector("button")
+            .classList.add(
+              "!py-2",
+              "!px-3",
+              "!bg-green-900",
+              "!text-white",
+              "!text-base"
+            );
+        }
+        function onSubmit() {
+          const button = document.querySelector("button");
+          button.classList.add("!bg-gray-400");
+          button.textContent = "Loading...";
+        }
+      </script>
     </form>
 
     <hr />
@@ -204,22 +234,4 @@ const stayingInHostel = people.some((p) => !!p.accommodation);
       )
     }
   </div>
-
-  <script define:vars={{ people }}>
-    console.log(JSON.stringify(people, null, 2));
-
-    // Only show the button if there are changes
-    document.querySelectorAll("input").forEach((input) => {
-      input.addEventListener("change", () => {
-        document.querySelector("button").classList.remove("hidden");
-      });
-    });
-
-    // Only show the button if there are changes
-    document.querySelectorAll("input").forEach((input) => {
-      input.addEventListener("blur", () => {
-        document.querySelector("button").classList.remove("hidden");
-      });
-    });
-  </script>
 </Layout>
