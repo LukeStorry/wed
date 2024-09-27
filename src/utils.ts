@@ -89,7 +89,6 @@ export async function handleUpdateForm(formData: FormData): Promise<void> {
   for (const update of updates) {
     const result = schema.safeParse({ ...update, ...updates });
 
-    console.log({ update, result });
     if (!result.success) {
       console.error(update);
       throw new Error("Bad FormData?", { cause: result.error.format() });

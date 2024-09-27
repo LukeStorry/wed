@@ -8,7 +8,9 @@ interface Props {
 
 const { people } = Astro.props;
 
-const stayingInHostel = people.some((p) => !!p.accommodation);
+const { accommodation } = people.find((p) => !!p.accommodation) || {};
+const stayingWithUs = !!accommodation;
+const accommodationIsSet = !!accommodation?.includes(".");
 ---
 
 {
@@ -20,16 +22,18 @@ const stayingInHostel = people.some((p) => !!p.accommodation);
     <div class="h-96" />
   ) : (
     <>
-      {stayingInHostel && (
+      {stayingWithUs && (
         <section class="m-2 flex flex-col rounded p-2">
           <h2 class="text-lg font-bold">Accomodation</h2>
-          {people.some((p) => p.accommodation?.includes(".")) ? (
-            `You're down to stay in: ${people[0]?.accommodation}`
+          {accommodationIsSet ? (
+            <>You're down to stay in: {accommodation}</>
           ) : (
             <AccomodationPreference currentValue={people[0]?.accommodation} />
           )}
         </section>
       )}
+
+      <hr class="m-2" />
 
       {/* <!-- LOCATION INFO  --> */}
 
@@ -54,16 +58,18 @@ const stayingInHostel = people.some((p) => !!p.accommodation);
         </div>
       </section>
 
+      <hr class="m-2" />
+
       {/* <!-- TIMING INFO  --> */}
 
       <section class="m-2 rounded p-2">
         <h2 class="text-lg font-bold">Timetable</h2>
         <p>
           More to be announced closer to the time, but festivities will be
-          occurring throughout the weekend.
+          occurring throughout the weekend:
         </p>
-        <ul class="list-inside list-disc">
-          {stayingInHostel ? (
+        <ul class="m-2 list-inside list-disc">
+          {stayingWithUs ? (
             <>
               <li>
                 Friday evening - will probably have a takeout and beers on the
