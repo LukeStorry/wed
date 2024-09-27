@@ -56,9 +56,18 @@ if (Astro.request.method === "POST") {
 ---
 
 <Layout>
+  <script is:inline>
+    function onSubmit() {
+      const button = document.querySelector("button");
+      button.classList.add("!bg-gray-400");
+      button.textContent = "Loading...";
+    }
+  </script>
+
   <form
     action="/rsvp"
     method="POST"
+    onsubmit="onSubmit()"
     class="flex h-full w-full flex-col items-center justify-around gap-8 pb-24 pr-4 pt-12 align-middle sm:h-3/4"
   >
     <h2 class="text-xl font-bold">RSVP</h2>
