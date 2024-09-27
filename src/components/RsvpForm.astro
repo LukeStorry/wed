@@ -28,7 +28,7 @@ const code = codes[0];
           {/* <!-- YES RADIO INPUT  --> */}
           <label
             class:list={[
-              "rounded p-2 has-[:checked]:bg-green-800 has-[:checked]:text-white",
+              "cursor-pointer rounded p-2 has-[:checked]:bg-green-800 has-[:checked]:text-white",
               attending == "maybe"
                 ? "bg-slate-200"
                 : "has-[:not(:checked)]:line-through",
@@ -47,7 +47,7 @@ const code = codes[0];
           {/* <!-- NO RADIO INPUT  --> */}
           <label
             class:list={[
-              "rounded p-2 has-[:checked]:bg-red-500",
+              "cursor-pointer rounded p-2 has-[:checked]:bg-red-500",
               attending == "maybe"
                 ? "bg-slate-200"
                 : "has-[:not(:checked)]:line-through",
