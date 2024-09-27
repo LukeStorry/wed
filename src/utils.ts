@@ -13,7 +13,8 @@ const schema = z.object({
   diet: z.string().optional(),
   accommodation: z.string().optional(),
 });
-type Row = z.infer<typeof schema>;
+
+export type Row = z.infer<typeof schema>;
 
 async function getData(): Promise<GoogleSpreadsheetRow<Row>[]> {
   if (!SPREADSHEET_ID || !GOOGLE_SERVICE_ACCOUNT_EMAIL || !GOOGLE_PRIVATE_KEY)

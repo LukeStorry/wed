@@ -1,0 +1,110 @@
+---
+import { type Row } from "../utils";
+
+interface Props {
+  people: Row[];
+  code: string;
+}
+
+const { people, code } = Astro.props;
+---
+
+<form class="mb-4" action=`/rsvp/${code}` method="POST">
+  {
+    people.map(({ name, attending, diet }, i) => (
+      <div class="m-2 mb-6 rounded p-2">
+        <input type="hidden" name={`${i}.code`} value={code} />
+        <input type="hidden" name={`${i}.name`} value={name} />
+
+        <h2 class="text-lg font-bold">{name}</h2>
+        <div class="m-2 flex gap-2">
+          {/* justify-evenly */}
+
+          {/* <!-- YES RADIO INPUT  --> */}
+          <label
+            class:list={[
+              "rounded p-2 has-[:checked]:bg-green-800 has-[:checked]:text-white",
+              attending == "maybe"
+                ? "bg-slate-200"
+                : "has-[:not(:checked)]:line-through",
+            ]}
+          >
+            I'll be there!
+            <input
+              class="hidden"
+              value="yes"
+              type="radio"
+              name={`${i}.attending`}
+              checked={attending == "yes"}
+            />
+          </label>
+
+          {/* <!-- NO RADIO INPUT  --> */}
+          <label
+            class:list={[
+              "rounded p-2 has-[:checked]:bg-red-500",
+              attending == "maybe"
+                ? "bg-slate-200"
+                : "has-[:not(:checked)]:line-through",
+            ]}
+          >
+            I'll be square (not there)
+            <input
+              class="hidden"
+              value="no"
+              type="radio"
+              name={`${i}.attending`}
+              checked={attending == "no"}
+            />
+          </label>
+        </div>
+
+        {/* <!-- DIETARY INPUT  --> */}
+
+        {attending == "yes" && (
+          <input
+            class="m-2 ml-2 rounded p-2"
+            aria-label="Dietary Requirements"
+            placeholder="Dietary Requirements"
+            name={`${i}.diet`}
+            value={diet}
+            type="text"
+          />
+        )}
+      </div>
+    ))
+  }
+  <!-- END OF FORM  -->
+
+  <button
+    class="mb-3 ml-4 rounded border p-1 text-sm font-bold"
+    type="submit"
+    onclick="onSubmit()"
+    >Save
+  </button>
+
+  <script is:inline>
+    // Highlight the button if there are changes
+    document.querySelectorAll("input").forEach((input) => {
+      input.addEventListener("change", onChange);
+      input.addEventListener("blur", onChange);
+    });
+
+    function onChange() {
+      document
+        .querySelector("button")
+        .classList.add(
+          "!py-2",
+          "!px-3",
+          "!bg-green-900",
+          "!text-white",
+          "!text-base"
+        );
+    }
+    function onSubmit() {
+      const button = document.querySelector("button");
+      button.classList.add("!bg-gray-400");
+      button.textContent = "Loading...";
+    }
+  </script>
+</form>
