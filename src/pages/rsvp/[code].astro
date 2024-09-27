@@ -20,6 +20,8 @@ if (!people?.length) {
     "Sorry something has gone wrong, please send Luke a message."
   );
 }
+
+const stayingInHostel = people.some((p) => !!p.accommodation);
 ---
 
 <Layout>
@@ -66,7 +68,7 @@ if (!people?.length) {
                     : "has-[:not(:checked)]:line-through",
                 ]}
               >
-                Can't make it
+                I'll be square (not there)
                 <input
                   class="hidden"
                   value="no"
@@ -95,7 +97,7 @@ if (!people?.length) {
       <!-- END OF FORM  -->
 
       <button
-        class="ml-36 hidden rounded border bg-green-900 p-2 font-bold text-white"
+        class="ml-36 rounded border bg-green-900 p-2 font-bold text-white"
         type="submit"
         >Update
       </button>
@@ -106,11 +108,51 @@ if (!people?.length) {
     <!-- DETAILS SECTION  -->
 
     {
-      people.some((p) => p.attending == "yes") ? (
-        <section>
+      !people.some((p) => p.attending == "yes") ? (
+        <div class="h-96 p-24">
+          Sad to miss you! Lots of love and hope to see you soon!
+        </div>
+      ) : (
+        <>
+          {/* <!-- ACCOMODATION INFO  --> */}
+
+          {stayingInHostel && (
+            <section class="m-2 flex flex-col rounded p-2">
+              <h2 class="text-lg font-bold">Accomodation</h2>
+              {people.some((p) => p.accommodation?.includes(".")) ? (
+                `You're down to stay in: ${people[0]?.accommodation}`
+              ) : (
+                <>
+                  <p>
+                    We have alocated you a room in the hostel for both Friday
+                    and Saturday nights.
+                  </p>
+                  <p>
+                    We're still figuring it out, do you have a preference on any
+                    of these rooms?
+                  </p>
+                  <select
+                    name="accomodation"
+                    class="mt-2 w-2/3 rounded font-light"
+                  >
+                    <option>Single bed in shared room - £110 per person</option>
+                    <option>
+                      Single bed in private room - £140 per person
+                    </option>
+                    <option>Bunk bed in shared room - £90 per person</option>
+                    <option>Double bed in shared room - £90 per person</option>
+                    <option>
+                      Double bed in private room - £140 per person
+                    </option>
+                  </select>
+                </>
+              )}
+            </section>
+          )}
+
           {/* <!-- LOCATION INFO  --> */}
 
-          <div class="m-2 rounded p-2">
+          <section class="m-2 rounded p-2">
             <h2 class="text-lg font-bold">Location</h2>
             <div class="grid grid-cols-2">
               <div class="flex flex-col justify-center">
@@ -129,21 +171,36 @@ if (!people?.length) {
                 />
               </div>
             </div>
-          </div>
+          </section>
 
-          {/* <!-- ACCOMODATION INFO  --> */}
+          {/* <!-- TIMING INFO  --> */}
 
-          <div class="m-2 flex flex-col rounded p-2">
-            <h2 class="text-lg font-bold">Accomodation</h2>
-            {people.some((p) => p.accommodation == "?")
-              ? "We have a hostel full of rooms, give us a text to get involved!"
-              : people.some((p) => p.accommodation?.includes("."))
-                ? `You're down to stay in: ${people[0]?.accommodation}`
-                : "There are loads of B&Bs near Widemouth Bay, and a caravan park at the end of the road. Give us a call if you want a hand!"}
-          </div>
-        </section>
-      ) : (
-        <div class="h-96" />
+          <section class="m-2 rounded p-2">
+            <h2 class="text-lg font-bold">Timetable</h2>
+            <p>
+              More to be announced closer to the time, but festivities will be
+              occurring throughout the weekend.
+            </p>
+            <ul class="list-inside list-disc">
+              {stayingInHostel ? (
+                <>
+                  <li>
+                    Friday evening - will probably have a takeout and beers on
+                    the beach
+                  </li>
+                  <li>Saturday morning - hike/surf/hangout</li>
+                  <li>Saturday lunch - mega pasty order</li>
+                </>
+              ) : (
+                <li>Saturday 3pm - welcome</li>
+              )}
+              <li>Saturday 4pm(ish) - ceremony</li>
+              <li>Saturday 5:30 - dinner</li>
+              <li>Saturday 7:30 - ceileidh</li>
+              <li>Saturday 9pm - disco</li>
+            </ul>
+          </section>
+        </>
       )
     }
   </div>
