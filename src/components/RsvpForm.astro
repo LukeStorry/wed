@@ -12,6 +12,11 @@ if (codes.length > 1) {
   return new Response("Sorry, you can only RSVP for one code at a time.");
 }
 const code = codes[0];
+
+// We show the submit button after the accom question, if it renders
+const hideSubmitButton = people.find(
+  (p) => !!p.accommodation && !p.accommodation.includes(".")
+);
 ---
 
 <form class="mb-4" id="rsvp-form" action=`/rsvp/${code}` method="POST">
@@ -81,12 +86,17 @@ const code = codes[0];
   }
   <!-- END OF FORM  -->
 
-  <button
-    class="mb-3 ml-4 rounded border p-1 text-sm font-bold"
-    type="submit"
-    onclick="onSubmit()"
-    >Save
-  </button>
+  {
+    !hideSubmitButton && (
+      <button
+        class="mb-3 ml-4 rounded border p-1 text-sm font-bold"
+        type="submit"
+        onclick="onSubmit()"
+      >
+        Save
+      </button>
+    )
+  }
 
   <script is:inline>
     // Highlight the button if there are changes

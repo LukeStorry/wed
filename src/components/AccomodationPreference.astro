@@ -5,39 +5,45 @@ interface Props {
 var { currentValue } = Astro.props;
 ---
 
-<>
-  <p>
-    We have allocated you a room in the hostel for both Friday and Saturday
-    nights.
-  </p>
-  <label for="accommodation">
-    We're still figuring it out, do you have a preference on any of these rooms?
-  </label>
-  <select
-    name="accommodation"
-    id="accommodation"
-    form="rsvp-form"
-    class="mt-2 rounded font-light"
-    onchange="this.form.submit()"
-  >
-    {
-      (
-        [
-          "Choose your preference",
-          "Single bed in shared room - £110 per person",
-          "Single bed in private room - £140 per person",
-          "Bunk bed in shared room - £90 per person",
-          "Double bed in shared room - £90 per person",
-          "Double bed in private room - £140 per person",
-        ] as const
-      ).map((o, i) => (
-        <option
-          selected={o == currentValue || (i == 0 && currentValue == "?")}
-          disabled={i == 0}
-        >
-          {o}
-        </option>
-      ))
-    }
-  </select>
-</>
+<p>
+  We have allocated you a room in the hostel for both Friday and Saturday
+  nights.
+</p>
+<label for="accommodation">
+  We're still figuring it out, do you have a preference on any of these rooms?
+</label>
+<select
+  name="accommodation"
+  id="accommodation"
+  form="rsvp-form"
+  class="mt-2 rounded font-light"
+  onchange="onChange()"
+>
+  {
+    (
+      [
+        "Choose your preference",
+        "Single bed in shared room - £110 per person",
+        "Single bed in private room - £140 per person",
+        "Bunk bed in shared room - £90 per person",
+        "Double bed in shared room - £90 per person",
+        "Double bed in private room - £140 per person",
+      ] as const
+    ).map((o, i) => (
+      <option
+        selected={o == currentValue || (i == 0 && currentValue == "?")}
+        disabled={i == 0}
+      >
+        {o}
+      </option>
+    ))
+  }
+</select>
+
+<button
+  form="rsvp-form"
+  class="m-4 rounded border p-2 text-sm font-bold"
+  type="submit"
+  onclick="onSubmit()"
+  >Save
+</button>
