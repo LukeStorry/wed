@@ -63,13 +63,16 @@ if (Astro.request.method === "POST") {
   >
     <h2 class="text-xl font-bold">Login</h2>
     <div>
-      <label class="block" for="name">Name</label>
+      <label class="block" for="name">Your full name</label>
+      <!-- <p class="text-xs font-light italic text-gray-400">Full name</p> -->
+
       <input name="name" value={data?.name} class="rounded" type="text" />
       {errors.name && <p class="text-sm text-red-400">{errors.name}</p>}
     </div>
 
     <div>
       <label class="block" for="password"> Password </label>
+      <p class="text-xs font-light italic text-gray-400">(name of our boat)</p>
       <input
         name="password"
         value={data?.password}
