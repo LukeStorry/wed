@@ -1,15 +1,20 @@
 ---
+import _ from "lodash";
 import { type Row } from "../utils";
 
 interface Props {
   people: Row[];
-  code: string;
 }
 
-const { people, code } = Astro.props;
+const { people } = Astro.props;
+const codes = _.uniq(people.map((p) => p.code));
+if (codes.length > 1) {
+  return new Response("Sorry, you can only RSVP for one code at a time.");
+}
+const code = codes[0];
 ---
 
-<form class="mb-4" action=`/rsvp/${code}` method="POST">
+<form class="mb-4" id="rsvp-form" action=`/rsvp/${code}` method="POST">
   {
     people.map(({ name, attending, diet }, i) => (
       <div class="m-2 mb-6 rounded p-2">

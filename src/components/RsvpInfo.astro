@@ -1,5 +1,6 @@
 ---
 import { type Row } from "../utils";
+import AccomodationPreference from "./AccomodationPreference.astro";
 
 interface Props {
   people: Row[];
@@ -25,23 +26,7 @@ const stayingInHostel = people.some((p) => !!p.accommodation);
           {people.some((p) => p.accommodation?.includes(".")) ? (
             `You're down to stay in: ${people[0]?.accommodation}`
           ) : (
-            <>
-              <p>
-                We have alocated you a room in the hostel for both Friday and
-                Saturday nights.
-              </p>
-              <p>
-                We're still figuring it out, do you have a preference on any of
-                these rooms?
-              </p>
-              <select name="accomodation" class="mt-2 w-2/3 rounded font-light">
-                <option>Single bed in shared room - £110 per person</option>
-                <option>Single bed in private room - £140 per person</option>
-                <option>Bunk bed in shared room - £90 per person</option>
-                <option>Double bed in shared room - £90 per person</option>
-                <option>Double bed in private room - £140 per person</option>
-              </select>
-            </>
+            <AccomodationPreference currentValue={people[0]?.accommodation} />
           )}
         </section>
       )}

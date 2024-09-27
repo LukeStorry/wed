@@ -81,15 +81,23 @@ export async function handleUpdateForm(formData: FormData): Promise<void> {
   // We've got multiple objects with prepended indexes, so unpack into objects
   const keyValuePairs = [...formData.entries()];
 
-  const updates: unknown[] = [];
+  const updates: object[] = [];
+  // keys of type 0.name and 0.attending will be on objects, `accommodation` will be on parent
   keyValuePairs.forEach(([k, v]) => _.set(updates, k, v));
   console.log(updates);
 
   for (const update of updates) {
-    const result = schema.safeParse(update);
+    const result = schema.safeParse({ ...update, ...updates });
+
+    console.log({ update, result });
     if (!result.success) {
       console.error(update);
       throw new Error("Bad FormData?", { cause: result.error.format() });
+    }
+
+    if (result.data.attending != "yes") {
+      result.data.accommodation = "";
+      result.data.diet = "";
     }
     await updateRow(result.data);
   }
