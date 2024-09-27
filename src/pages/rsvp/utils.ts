@@ -30,14 +30,15 @@ async function getData(): Promise<GoogleSpreadsheetRow<Row>[]> {
   const sheet = doc.sheetsByTitle["AppData"];
   if (!sheet)
     throw new Error(`Unable to find AppData Sheet on ${SPREADSHEET_ID}"`);
-  await sheet.loadCells();
+
   const rows = await sheet.getRows<Row>();
 
   return rows;
 }
 
 export async function getCodeFromName(name: string): Promise<string | null> {
-  const rows = await getData();
+  const rows = await getData().catch((e) => console.error(e));
+  if (!rows) return null;
   const row = rows.find((r) =>
     String(r.get("name")).toLowerCase().includes(name.toLowerCase()),
   );
