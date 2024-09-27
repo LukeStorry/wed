@@ -12,6 +12,7 @@ const schema = z.object({
   attending: z.enum(["yes", "no", "maybe"]).optional(),
   diet: z.string().optional(),
   accommodation: z.string().optional(),
+  note: z.string().optional(),
 });
 
 export type Row = z.infer<typeof schema>;

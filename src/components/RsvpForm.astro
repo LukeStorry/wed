@@ -73,9 +73,9 @@ const hideSubmitButton = people.find(
 
         {attending == "yes" && (
           <input
-            class="m-2 ml-2 rounded p-2"
-            aria-label="Dietary Requirements"
-            placeholder="Dietary Requirements"
+            class="m-2 ml-2 rounded p-2 text-xs"
+            aria-label="Dietary requirements"
+            placeholder=">Dietary requirements"
             name={`${i}.diet`}
             value={diet}
             type="text"
@@ -84,6 +84,14 @@ const hideSubmitButton = people.find(
       </div>
     ))
   }
+
+  <textarea
+    class="m-2 w-2/3 rounded p-2 text-xs"
+    aria-label="Mention anything we've forgotten to ask."
+    placeholder="Notes"
+    onchange="onChange()"
+    name="note">{people.find((p) => p.note)?.note}</textarea
+  >
   <!-- END OF FORM  -->
 
   {
