@@ -15,7 +15,8 @@ const code = codes[0];
 
 // We show the submit button after the accom question, if it renders
 const hideSubmitButton = people.find(
-  (p) => !!p.accommodation && !p.accommodation.includes(".")
+  (p) =>
+    !!p.accommodation && !p.accommodation.includes(".") && p.attending === "yes"
 );
 ---
 
@@ -86,7 +87,7 @@ const hideSubmitButton = people.find(
   }
 
   <textarea
-    class="m-2 w-2/3 rounded p-2 text-xs"
+    class="m-2 ml-8 w-2/3 rounded p-2 text-xs"
     aria-label="Mention anything we've forgotten to ask."
     placeholder="Notes"
     onchange="onChange()"
@@ -96,13 +97,18 @@ const hideSubmitButton = people.find(
 
   {
     !hideSubmitButton && (
-      <button
-        class="mb-3 ml-4 rounded border p-1 text-sm font-bold"
-        type="submit"
-        onclick="onSubmit()"
-      >
-        Save
-      </button>
+      <div class="m-4 mb-0 flex w-11/12 flex-col">
+        <div class="ml-auto">
+          <button
+            form="rsvp-form"
+            class="rounded border p-2 text-sm font-bold"
+            type="submit"
+            onclick="onSubmit()"
+          >
+            Save
+          </button>
+        </div>
+      </div>
     )
   }
 

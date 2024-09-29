@@ -40,10 +40,14 @@ var { currentValue } = Astro.props;
   }
 </select>
 
-<button
-  form="rsvp-form"
-  class="m-4 rounded border p-2 text-sm font-bold"
-  type="submit"
-  onclick="onSubmit()"
-  >Save
-</button>
+<div class="m-4 mb-0 flex w-11/12 flex-col">
+  <div class="ml-auto">
+    <button
+      form="rsvp-form"
+      class="rounded border p-2 text-sm font-bold"
+      type="submit"
+      onclick="onSubmit()"
+      >Save
+    </button>
+  </div>
+</div>
