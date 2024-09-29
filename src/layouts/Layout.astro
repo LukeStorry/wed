@@ -9,6 +9,7 @@ interface Props {
 }
 
 const { title, onCardClick, blackBackground } = Astro.props;
+const currentUrl = Astro.url;
 
 const duration = "0.6s";
 const rotate = {
@@ -46,10 +47,10 @@ const Container = onCardClick ? "a" : "div";
     <ViewTransitions />
   </head>
   <body
-    transition:animate={{ forwards: rotate, backwards: rotate }}
-    class="flex h-svh w-screen min-w-[280px] items-center justify-center bg-green-800 p-4 sm:p-8"
+    class="flex h-svh w-screen min-w-[280px] flex-col items-center justify-center bg-green-800 p-4 sm:p-8 md:flex-row"
   >
     <Container
+      transition:animate={{ forwards: rotate, backwards: rotate }}
       href={onCardClick}
       class={`max-h-full aspect-[1220/2000] rounded-lg border-2 w-full sm:w-auto sm:h-full
         border-black drop-shadow-2xl shadow-2xl
@@ -59,5 +60,14 @@ const Container = onCardClick ? "a" : "div";
     >
       <slot />
     </Container>
+    {
+      !currentUrl.pathname.includes("rsvp") && (
+        <div class="m-4 flex justify-center md:mt-96">
+          <a href="/rsvp" class="rounded-xl border bg-white p-2">
+            RSVP →
+          </a>
+        </div>
+      )
+    }
   </body>
 </html>
