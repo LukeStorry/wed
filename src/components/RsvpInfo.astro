@@ -76,9 +76,13 @@ const accommodationIsSet = !!accommodation?.includes(".");
         <ul class="m-2 list-inside list-disc">
           {stayingWithUs ? (
             <>
+              <li>Friday from 3pm - check in</li>
               <li>
                 Friday evening - will probably have a takeout and beers on the
                 beach
+              </li>
+              <li>
+                Saturday 8:30-9:30 - breakfast (included in accommodation)
               </li>
               <li>Saturday morning - hike/surf/hangout</li>
               <li>Saturday lunch - mega pasty order</li>
@@ -90,6 +94,12 @@ const accommodationIsSet = !!accommodation?.includes(".");
           <li>Saturday 5:30 - dinner</li>
           <li>Saturday 7:30 - ceileidh</li>
           <li>Saturday 9pm - disco</li>
+          {stayingWithUs && (
+            <>
+              <li>Sunday 8:30-9:30 - breakfast (included in accommodation)</li>
+              <li>Sunday 11am - checkout</li>
+            </>
+          )}
         </ul>
       </section>
     </>
