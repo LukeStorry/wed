@@ -1,6 +1,6 @@
 ---
 import { type Row } from "../utils";
-import AccomodationPreference from "./AccomodationPreference.astro";
+import AccommodationPreference from "./AccommodationPreference.astro";
 
 interface Props {
   people: Row[];
@@ -28,7 +28,7 @@ const accommodationIsSet = !!accommodation?.includes(".");
           {accommodationIsSet ? (
             <>You're down to stay in: {accommodation}</>
           ) : (
-            <AccomodationPreference currentValue={accommodation} />
+            <AccommodationPreference currentValue={accommodation} />
           )}
         </section>
       )}
