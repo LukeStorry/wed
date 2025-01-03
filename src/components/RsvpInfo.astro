@@ -69,38 +69,76 @@ const accommodationIsSet = !!accommodation?.includes(".");
 
       <section class="m-2 rounded p-2">
         <h2 class="text-lg font-bold">Timetable</h2>
-        <p>
-          More to be announced closer to the time, but festivities will be
-          occurring throughout the weekend:
-        </p>
-        <ul class="m-2 list-inside list-disc">
-          {stayingWithUs ? (
-            <>
-              <li>Friday from 3pm - check in</li>
-              <li>
-                Friday evening - will probably have a takeout and beers on the
-                beach
-              </li>
-              <li>
-                Saturday 8:30-9:30 - breakfast (included in accommodation)
-              </li>
-              <li>Saturday morning - hike/surf/hangout</li>
-              <li>Saturday lunch - mega pasty order</li>
-            </>
-          ) : (
-            <li>Saturday 3pm - welcome</li>
-          )}
-          <li>Saturday 4pm(ish) - ceremony</li>
-          <li>Saturday 5:30 - dinner</li>
-          <li>Saturday 7:30 - ceileidh</li>
-          <li>Saturday 9pm - disco</li>
-          {stayingWithUs && (
-            <>
-              <li>Sunday 8:30-9:30 - breakfast (included in accommodation)</li>
-              <li>Sunday 11am - checkout</li>
-            </>
-          )}
-        </ul>
+        {stayingWithUs && (
+          <p>
+            More to be announced closer to the time, but festivities will be
+            occurring throughout the weekend:
+          </p>
+        )}
+        <table class="my-2 w-full table-auto">
+          <tbody class="divide-y divide-gray-200">
+            {stayingWithUs ? (
+              <>
+                <tr>
+                  <td class="font-bold">Friday</td>
+                </tr>
+                <tr>
+                  <td>3pm</td>
+                  <td>Check in</td>
+                </tr>
+                <tr>
+                  <td>Evening</td>
+                  <td>Takeout and beers on the beach</td>
+                </tr>
+                <tr>
+                  <td class="pt-4 font-bold">Saturday</td>
+                </tr>
+                <tr>
+                  <td>8:30-9:30</td>
+                  <td>Breakfast (included in accommodation)</td>
+                </tr>
+                <tr>
+                  <td>Morning</td> <td>Hike/surf/hangout</td>
+                </tr>
+                <tr>
+                  <td>Lunch</td> <td>Mega pasty order</td>
+                </tr>
+              </>
+            ) : (
+              <tr>
+                <td>3pm</td> <td>Welcome</td>
+              </tr>
+            )}
+            <tr>
+              <td>4pm(ish)</td>
+              <td>Ceremony</td>
+            </tr>
+            <tr>
+              <td>5:30</td> <td>Dinner</td>
+            </tr>
+            <tr>
+              <td>7:30</td> <td>Ceileidh</td>
+            </tr>
+            <tr>
+              <td>9pm-late</td> <td>Disco</td>
+            </tr>
+            {stayingWithUs && (
+              <>
+                <tr>
+                  <td class="pt-4 font-bold">Sunday</td>
+                </tr>
+                <tr>
+                  <td>8:30-9:30</td>
+                  <td>Breakfast (included in accommodation)</td>
+                </tr>
+                <tr>
+                  <td>11am</td>
+                  <td>Checkout</td>
+                </tr>
+              </>
+            )}
+          </tbody>
+        </table>
       </section>
     </>
   )
