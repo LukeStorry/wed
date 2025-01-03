@@ -77,7 +77,7 @@ const accommodationIsSet = !!accommodation?.includes(".");
         )}
         <table class="my-2 w-full table-auto">
           <tbody class="divide-y divide-gray-200">
-            {stayingWithUs ? (
+            {stayingWithUs && (
               <>
                 <tr>
                   <td class="font-bold">Friday</td>
@@ -104,23 +104,21 @@ const accommodationIsSet = !!accommodation?.includes(".");
                   <td>Lunch</td> <td>Mega pasty order</td>
                 </tr>
               </>
-            ) : (
-              <tr>
-                <td>3pm</td> <td>Welcome</td>
-              </tr>
             )}
             <tr>
-              <td>4pm(ish)</td>
-              <td>Ceremony</td>
+              <td>from 2pm</td> <td>Welcome drinks</td>
             </tr>
             <tr>
-              <td>5:30</td> <td>Dinner</td>
+              <td>3pm</td> <td>Ceremony</td>
             </tr>
             <tr>
-              <td>7:30</td> <td>Ceileidh</td>
+              <td>5pm</td> <td>Dinner</td>
             </tr>
             <tr>
-              <td>9pm-late</td> <td>Disco</td>
+              <td>7:30pm</td> <td>Ceileidh</td>
+            </tr>
+            <tr>
+              <td>10pm-late</td> <td>Disco</td>
             </tr>
             {stayingWithUs && (
               <>
