@@ -3,7 +3,7 @@ import { z } from "zod";
 import Layout from "../../layouts/Layout.astro";
 import { getCodeFromName } from "../../utils";
 
-const PASSWORD = import.meta.env.PASSWORD;
+const PASSWORDS = JSON.parse(import.meta.env.PASSWORDS);
 
 const schema = z.object({
   name: z
@@ -15,7 +15,7 @@ const schema = z.object({
   password: z
     .string()
     .min(2, "Please enter a password")
-    .refine((val) => val.toLowerCase() === PASSWORD, {
+    .refine((val) => PASSWORDS.includes(val.toLowerCase()), {
       message: "Incorrect password, sorry!",
     }),
 });
