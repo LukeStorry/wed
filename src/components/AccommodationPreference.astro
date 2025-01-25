@@ -23,16 +23,16 @@ var { currentValue } = Astro.props;
       [
         "Choose your preference",
         "Single bed in private room - £140 per person",
+        "Camping - £10 per person",
         "Single bed in shared room - £110 per person",
         "Bunk bed in shared room - £90 per person",
         "Double bed in shared room - £90 per person",
-        "Camping - £10 per person",
         "No thanks, I will sort it out myself",
       ] as const
     ).map((o, i) => (
       <option
         selected={o == currentValue || (i == 0 && currentValue == "?")}
-        disabled={i < 2}
+        disabled={i < 3}
       >
         {o}
       </option>
