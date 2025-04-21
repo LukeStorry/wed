@@ -1,0 +1,14 @@
+---
+import { Image } from "astro:assets";
+import Layout from "../layouts/Layout.astro";
+import saveTheDate from "../images/save_the_date.png";
+---
+
+<Layout title="Save The Date" onCardClick="/" blackBackground>
+  <Image
+    src={saveTheDate}
+    class="h-full w-full rounded-xl object-contain"
+    alt="Luke and Marnie are getting Married. Save the Date: 14th June 2025. Widemouth Bay, Cornwall. More info to come."
+    loading="eager"
+  />
+</Layout>

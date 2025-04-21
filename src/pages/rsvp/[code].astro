@@ -9,6 +9,13 @@ if (!code || typeof code !== "string") {
   return Astro.redirect("/rsvp");
 }
 
+// Set code as cookie that expires in 1 minute
+Astro.cookies.set("rsvp-code", code, {
+  expires: new Date(Date.now() + 1 * 60 * 1000),
+  path: "/",
+  secure: import.meta.env.PROD,
+});
+
 if (Astro.request.method === "POST") {
   console.log("RSVP POST Received", code);
   const formData = await Astro.request.formData();
@@ -28,7 +35,7 @@ if (!people?.length) {
   console.log(JSON.stringify(people, null, 2));
 </script>
 
-<Layout>
+<Layout title="RSVP and personal info">
   <div class="flex h-full flex-col justify-around overflow-scroll">
     <h1 class="pr-2 text-center text-2xl font-bold">RSVP</h1>
     <RsvpForm people={people} />

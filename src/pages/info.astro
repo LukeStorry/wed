@@ -1,14 +1,16 @@
 ---
-import { Image } from "astro:assets";
+import RsvpInfo from "../components/RsvpInfo.astro";
 import Layout from "../layouts/Layout.astro";
-import saveTheDate from "../images/save_the_date.png";
+import { getRowsFromCode } from "../utils";
+
+const code = Astro.cookies.get("rsvp-code")?.value;
+
+const people = code ? await getRowsFromCode(code) : [];
 ---
 
-<Layout title="Info" onCardClick="/" blackBackground>
-  <Image
-    src={saveTheDate}
-    class="h-full w-full rounded-xl object-contain"
-    alt="Luke and Marnie are getting Married. Save the Date: 14th June 2025. Widemouth Bay, Cornwall. More info to come."
-    loading="eager"
-  />
-</Layout> 
+<Layout title="Info" onCardClick="/save-the-date">
+  <div class="flex h-full flex-col justify-around overflow-scroll">
+    <h1 class="pr-2 text-center text-2xl font-bold">Info</h1>
+    <RsvpInfo people={people} />
+  </div>
+</Layout>

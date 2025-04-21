@@ -1,35 +1,27 @@
 ---
 import { type Row } from "../utils";
-import AccommodationPreference from "./AccommodationPreference.astro";
 
 interface Props {
   people: Row[];
 }
 
 const { people } = Astro.props;
-
 const { accommodation } = people.find((p) => !!p.accommodation) || {};
-const stayingWithUs = !!accommodation;
-const accommodationIsSet = !!accommodation?.includes(".");
+const seeAll = people.find((p) => !!p.seeAll)?.seeAll == "yes";
 ---
 
 {
-  people.every((p) => p.attending == "no") ? (
+  people.length && people.every((p) => p.attending == "no") ? (
     <div class="p-24">
       Sad to miss you! Lots of love and hope to see you soon!
     </div>
-  ) : !people.some((p) => p.attending == "yes") ? (
-    <div class="h-96" />
   ) : (
     <>
-      {stayingWithUs && (
+      {/* <!-- ACCOMMODATION INFO  --> */}
+      {!!accommodation && (
         <section class="m-2 rounded p-2">
           <h2 class="text-lg font-bold">Accommodation</h2>
-          {accommodationIsSet ? (
-            <>You're down to stay in: {accommodation}</>
-          ) : (
-            <AccommodationPreference currentValue={accommodation} />
-          )}
+          You're down to stay in: {accommodation}
         </section>
       )}
 
@@ -69,7 +61,7 @@ const accommodationIsSet = !!accommodation?.includes(".");
 
       <section class="m-2 rounded p-2">
         <h2 class="text-lg font-bold">Timetable</h2>
-        {stayingWithUs && (
+        {seeAll && (
           <p>
             More to be announced closer to the time, but festivities will be
             occurring throughout the weekend:
@@ -77,7 +69,7 @@ const accommodationIsSet = !!accommodation?.includes(".");
         )}
         <table class="my-2 w-full table-auto">
           <tbody class="divide-y divide-gray-200">
-            {stayingWithUs && (
+            {seeAll && (
               <>
                 <tr>
                   <td class="font-bold">Friday</td>
@@ -120,7 +112,7 @@ const accommodationIsSet = !!accommodation?.includes(".");
             <tr>
               <td>10pm-late</td> <td>Disco</td>
             </tr>
-            {stayingWithUs && (
+            {seeAll && (
               <>
                 <tr>
                   <td class="pt-4 font-bold">Sunday</td>
