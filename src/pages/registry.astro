@@ -1,0 +1,108 @@
+---
+// RsvpInfo import is unused, removing it for now.
+// import RsvpInfo from "../components/RsvpInfo.astro";
+import Layout from "../layouts/Layout.astro";
+
+const options = [
+  {
+    title: "Lunch out 🌾",
+    description:
+      "Buy us lunch on our honeymoon! We're headed to Penzance to explore the cliffs. Let us know if you have any recommendations 💖",
+    reference: "Wedding Gift - Lunch Out",
+    price: 20,
+  },
+  {
+    title: "Dinner out 🌾",
+    description:
+      "Buy us dinner on our honeymoon! We're headed to Penzance to explore the cliffs. Let us know if you have any recommendations 💖",
+    reference: "Wedding Gift - Dinner Out",
+    price: 60,
+  },
+  {
+    title: "We need a bigger boat 🦈",
+    description:
+      "We bought a bigger boat in November, she's called Alice Rose and we love her, but would love a hand towards some maintenance this summer ❤️",
+    reference: "Wedding Gift - New Boat",
+    price: 100,
+  },
+  {
+    title: "Help us go windsurfing 💨",
+    description:
+      "We're keen to get out on the water this summer, so any help towards travel and kit hire would be great!",
+    reference: "Wedding Gift - Windsurfing",
+    price: 180,
+  },
+  {
+    title: "Other",
+    description: "If you've got something else in mind, let us know!",
+    reference: "Wedding Gift - Other",
+    price: "",
+  },
+];
+---
+
+<Layout title="Registry">
+  <div class="flex h-full flex-col justify-between overflow-scroll p-4">
+    <div>
+      <h1 class="mb-2 text-center text-2xl font-bold">Registry</h1>
+      <p class="mb-4 text-center">
+        Your presence is enough of a present to us!
+        <br />
+        But for those of you who are stubborn, we've put together a wish-list to
+        help you out.
+        <br />
+        Select an option below:
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+      {
+        options.map((option) => (
+          <div
+            class="option-box cursor-pointer rounded border border-gray-300 p-4 transition hover:bg-gray-100 aria-selected:border-green-800 aria-selected:bg-green-100 aria-selected:ring-2 aria-selected:ring-green-500"
+            aria-selected="false"
+            data-reference={option.reference}
+            data-price={option.price}
+          >
+            <h2 class="font-semibold">{option.title}</h2>
+            <p class="text-sm">{option.description}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="mt-6 flex justify-center">
+      <a
+        id="pay-button"
+        href="https://monzo.me/lukebrettstorry?d=Wedding Gift"
+        class="rounded bg-green-800 p-4 px-6 py-3 text-lg text-white transition hover:bg-green-900"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Contribute
+      </a>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  const optionBoxes = document.querySelectorAll(".option-box");
+  const payButton = document.getElementById("pay-button") as HTMLAnchorElement;
+
+  optionBoxes.forEach((box) => {
+    box.addEventListener("click", () => {
+      optionBoxes.forEach((b) => b.setAttribute("aria-selected", "false"));
+      box.setAttribute("aria-selected", "true");
+
+      const reference = box.getAttribute("data-reference");
+      const price = box.getAttribute("data-price");
+
+      payButton.href = `https://monzo.me/lukebrettstorry/${price}?d=${reference}`;
+      payButton.textContent = `Contribute ${price ? `£${price}` : ""}`;
+
+      // Scroll to and focus the button
+      payButton.scrollIntoView({ behavior: "smooth", block: "center" });
+      payButton.focus();
+    });
+  });
+</script>
