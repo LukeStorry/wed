@@ -26,7 +26,7 @@ if (Astro.request.method === "POST") {
 const people = await getRowsFromCode(code);
 if (!people?.length) {
   return new Response(
-    "Sorry something has gone wrong, please send Luke a message."
+    "Sorry something has gone wrong, please send Luke a message.",
   );
 }
 ---

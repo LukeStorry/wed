@@ -38,10 +38,9 @@ const seeAll = people.find((p) => !!p.seeAll)?.seeAll == "yes";
         <section class="m-2 rounded p-2">
           <h2 class="text-lg font-bold">Accommodation</h2>
           You're down to stay in: {accommodation}
+          <hr class="m-2" />
         </section>
       )}
-
-      <hr class="m-2" />
 
       {/* <!-- LOCATION INFO  --> */}
 
@@ -77,18 +76,18 @@ const seeAll = people.find((p) => !!p.seeAll)?.seeAll == "yes";
 
       <section class="m-2 rounded p-2">
         <h2 class="text-lg font-bold">Timetable</h2>
-        {seeAll && (
-          <p>
-            More to be announced closer to the time, but festivities will be
-            occurring throughout the weekend:
-          </p>
+        {seeAll ? (
+          <p>Festivities will be occurring throughout the weekend</p>
+        ) : (
+          <> </>
         )}
+
         <table class="my-2 w-full table-auto">
           <tbody class="divide-y divide-gray-200">
             {seeAll && (
               <>
                 <tr>
-                  <td class="font-bold">Friday</td>
+                  <td class="font-bold">Friday 13th June</td>
                 </tr>
                 <tr>
                   <td>3pm</td>
@@ -98,9 +97,15 @@ const seeAll = people.find((p) => !!p.seeAll)?.seeAll == "yes";
                   <td>Evening</td>
                   <td>Takeout and beers on the beach</td>
                 </tr>
-                <tr>
-                  <td class="pt-4 font-bold">Saturday</td>
-                </tr>
+              </>
+            )}
+
+            <tr>
+              <td class="pt-4 font-bold">Saturday 14th June</td>
+            </tr>
+
+            {seeAll && (
+              <>
                 <tr>
                   <td>8:30-9:30</td>
                   <td>Breakfast (included in accommodation)</td>
@@ -113,6 +118,7 @@ const seeAll = people.find((p) => !!p.seeAll)?.seeAll == "yes";
                 </tr>
               </>
             )}
+
             <tr>
               <td>from 2pm</td> <td>Welcome drinks</td>
             </tr>
@@ -131,7 +137,7 @@ const seeAll = people.find((p) => !!p.seeAll)?.seeAll == "yes";
             {seeAll && (
               <>
                 <tr>
-                  <td class="pt-4 font-bold">Sunday</td>
+                  <td class="pt-4 font-bold">Sunday 15th June</td>
                 </tr>
                 <tr>
                   <td>8:30-9:30</td>

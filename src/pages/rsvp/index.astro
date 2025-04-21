@@ -27,7 +27,7 @@ if (Astro.request.method === "POST") {
   console.log("Login POST Received");
 
   const formData = Object.fromEntries(
-    (await Astro.request.formData()).entries()
+    (await Astro.request.formData()).entries(),
   );
   console.log(`Login Attempt: ${JSON.stringify(formData)}`);
   const result = schema.safeParse(formData);
