@@ -8,7 +8,11 @@ const code = Astro.cookies.get("rsvp-code")?.value;
 const people = code ? await getRowsFromCode(code) : [];
 ---
 
-<Layout title="Info" onCardClick="/save-the-date">
+<script define:vars={{ people, code }}>
+  console.log(code, JSON.stringify(people, null, 2));
+</script>
+
+<Layout title="Info">
   <div class="flex h-full flex-col justify-around overflow-scroll">
     <h1 class="pr-2 text-center text-2xl font-bold">Info</h1>
     <RsvpInfo people={people} />
