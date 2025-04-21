@@ -7,7 +7,7 @@ const { SPREADSHEET_ID, GOOGLE_SERVICE_ACCOUNT_EMAIL, GOOGLE_PRIVATE_KEY } =
   import.meta.env;
 
 const schema = z.object({
-  code: z.string().min(5).max(5),
+  code: z.string().min(5),
   name: z.string().min(2),
   attending: z.enum(["yes", "no", "maybe"]).optional(),
   diet: z.string().optional(),
