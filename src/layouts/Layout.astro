@@ -6,9 +6,10 @@ interface Props {
   title?: string;
   onCardClick?: string;
   blackBackground?: boolean;
+  code?: string | undefined;
 }
 
-const { title, onCardClick, blackBackground } = Astro.props;
+const { title, onCardClick, blackBackground, code } = Astro.props;
 const currentUrl = Astro.url;
 
 const duration = "0.6s";
@@ -63,7 +64,10 @@ const Container = onCardClick ? "a" : "div";
     {
       currentUrl.pathname.includes("info") && (
         <div class="m-4 flex justify-center md:mt-96">
-          <a href="/rsvp" class="rounded-xl border bg-white p-2">
+          <a
+            href={`/rsvp/${code || ""}`}
+            class="rounded-xl border bg-white p-2"
+          >
             RSVP →
           </a>
         </div>

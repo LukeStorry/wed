@@ -9,12 +9,7 @@ if (!code || typeof code !== "string") {
   return Astro.redirect("/rsvp");
 }
 
-// Set code as cookie that expires in 1 minute
-Astro.cookies.set("rsvp-code", code, {
-  expires: new Date(Date.now() + 1 * 60 * 1000),
-  path: "/",
-  secure: import.meta.env.PROD,
-});
+Astro.cookies.set("rsvp-code", code);
 
 if (Astro.request.method === "POST") {
   console.log("RSVP POST Received", code);
@@ -26,7 +21,7 @@ if (Astro.request.method === "POST") {
 const people = await getRowsFromCode(code);
 if (!people?.length) {
   return new Response(
-    "Sorry something has gone wrong, please send Luke a message.",
+    "Sorry something has gone wrong, please send Luke a message."
   );
 }
 ---
