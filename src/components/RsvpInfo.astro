@@ -3,9 +3,10 @@ import { type Row } from "../utils";
 
 interface Props {
   people: Row[];
+  showNames?: boolean;
 }
 
-const { people } = Astro.props;
+const { people, showNames } = Astro.props;
 const { accommodation } = people.find((p) => !!p.accommodation) || {};
 const seeAll = people.find((p) => !!p.seeAll)?.seeAll == "yes";
 ---
@@ -17,6 +18,21 @@ const seeAll = people.find((p) => !!p.seeAll)?.seeAll == "yes";
     </div>
   ) : (
     <>
+      <hr class="m-2" />
+
+      {showNames && (
+        <>
+          <div class="ml-12">
+            {people.map((p) => (
+              <p>
+                {p.attending === "yes" ? "✅ " : "❌ "} {p.name}
+              </p>
+            ))}
+          </div>
+          <hr class="m-2" />
+        </>
+      )}
+
       {/* <!-- ACCOMMODATION INFO  --> */}
       {!!accommodation && (
         <section class="m-2 rounded p-2">
