@@ -22,7 +22,7 @@ const seeAll = people.find((p) => !!p.seeAll)?.seeAll == "yes";
 
       {showNames && (
         <>
-          <div class="ml-12">
+          <div class="ml-6">
             {people.map((p) => (
               <p>
                 {p.attending === "yes" ? "✅ " : "❌ "} {p.name}
@@ -35,11 +35,13 @@ const seeAll = people.find((p) => !!p.seeAll)?.seeAll == "yes";
 
       {/* <!-- ACCOMMODATION INFO  --> */}
       {!!accommodation && (
-        <section class="m-2 rounded p-2">
-          <h2 class="text-lg font-bold">Accommodation</h2>
-          You're down to stay in: {accommodation}
+        <>
+          <section class="m-2 rounded p-2">
+            <h2 class="text-lg font-bold">Accommodation</h2>
+            You're down to stay in: {accommodation}
+          </section>
           <hr class="m-2" />
-        </section>
+        </>
       )}
 
       {/* <!-- LOCATION INFO  --> */}
@@ -153,6 +155,8 @@ const seeAll = people.find((p) => !!p.seeAll)?.seeAll == "yes";
         </table>
       </section>
 
+      <hr class="my-2" />
+
       <section class="m-2 rounded p-2">
         <h2 class="text-lg font-bold">Dress Code</h2>
         <p class="my-2">No strict dress code, but dressing up is encouraged!</p>
@@ -162,15 +166,25 @@ const seeAll = people.find((p) => !!p.seeAll)?.seeAll == "yes";
           shoes for dancing.
         </p>
         <p> Please no stillettos as it will damage the grass.</p>
-        <hr class="my-2" />
       </section>
 
-      {/* <section class="m-2 rounded p-2">
-          <h2 class="text-lg font-bold">Accommodation</h2>
-          You're down to stay in: {accommodation}
-          <hr class="m-2" />
-        </section>
-         */}
+      <hr class="my-2" />
+
+      <section class="m-2 mb-16 rounded p-2">
+        <h2 class="text-lg font-bold">Registry</h2>
+        <div class="mb-6 mt-2">
+          Your presence is enough of a present to us!
+          <br />
+          But for those of you who want to get us something, we've put together
+          a wish-list.
+        </div>
+        <a
+          href="/registry"
+          class="my-6 rounded border bg-green-800 p-2 font-bold text-white"
+        >
+          View our registry
+        </a>
+      </section>
     </>
   )
 }
