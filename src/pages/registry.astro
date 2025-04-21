@@ -50,8 +50,8 @@ const options = [
         <br />
         But for those of you who want to get us something, we've put together a wish-list.
         <br />
-        As we live in a small space they are experiential, but sentimental or
-        made things we also love!
+        As we live in a small space they are experiential, but sentimental or made
+        things we also love!
         <br />
       </p>
     </div>
@@ -60,50 +60,35 @@ const options = [
       {
         options.map((option) => (
           <div
-            class="option-box cursor-pointer rounded border border-gray-300 p-4 transition hover:bg-gray-100 aria-selected:border-green-800 aria-selected:bg-green-100 aria-selected:ring-2 aria-selected:ring-green-500"
+            class="option-box group relative cursor-pointer rounded border border-gray-300 p-4 transition hover:bg-gray-100 aria-selected:border-green-800 aria-selected:bg-green-100 aria-selected:ring-2 aria-selected:ring-green-500"
             aria-selected="false"
-            data-reference={option.reference}
-            data-price={option.price}
           >
             <h2 class="font-semibold">{option.title}</h2>
             <p class="text-sm">{option.description}</p>
+            <a
+              href={`https://monzo.me/lukebrettstorry/${option.price || ""}?d=${option.reference}`}
+              class="contribute-button mt-3 hidden w-full rounded bg-green-800 p-2 text-center text-white transition hover:bg-green-900 group-aria-selected:block sm:w-auto sm:px-4"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Contribute {option.price ? `£${option.price}` : ""}
+            </a>
           </div>
         ))
       }
-    </div>
-
-    <div class="mt-6 flex justify-center">
-      <a
-        id="pay-button"
-        href="https://monzo.me/lukebrettstorry?d=Wedding Gift"
-        class="rounded bg-green-800 p-4 px-6 py-3 text-lg text-white transition hover:bg-green-900"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Contribute
-      </a>
     </div>
   </div>
 </Layout>
 
 <script>
   const optionBoxes = document.querySelectorAll(".option-box");
-  const payButton = document.getElementById("pay-button") as HTMLAnchorElement;
 
   optionBoxes.forEach((box) => {
     box.addEventListener("click", () => {
+      const currentBox = box as HTMLElement;
+      const wasSelected = currentBox.getAttribute("aria-selected") === "true";
       optionBoxes.forEach((b) => b.setAttribute("aria-selected", "false"));
-      box.setAttribute("aria-selected", "true");
-
-      const reference = box.getAttribute("data-reference");
-      const price = box.getAttribute("data-price");
-
-      payButton.href = `https://monzo.me/lukebrettstorry/${price}?d=${reference}`;
-      payButton.textContent = `Contribute ${price ? `£${price}` : ""}`;
-
-      // Scroll to and focus the button
-      payButton.scrollIntoView({ behavior: "smooth", block: "center" });
-      payButton.focus();
+      if (!wasSelected) currentBox.setAttribute("aria-selected", "true");
     });
   });
 </script>
