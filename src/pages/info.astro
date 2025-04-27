@@ -5,13 +5,21 @@ import { Image } from "astro:assets";
 import saveTheDate from "../images/save_the_date.png";
 import { getRowsFromCode } from "../utils";
 
-const shouldClearCode = Astro.url.searchParams.get("clear");
-if (shouldClearCode) Astro.cookies.delete("rsvp-code");
-
 const codeFromUrl = Astro.url.searchParams.get("code");
-if (codeFromUrl) Astro.cookies.set("rsvp-code", codeFromUrl);
 
-const code = Astro.cookies.get("rsvp-code")?.value;
+if (codeFromUrl == "clear" || Astro.url.searchParams.get("clear"))
+  Astro.cookies.delete("rsvp-code");
+
+const codeFromCookies = Astro.cookies.get("rsvp-code")?.value;
+
+if (codeFromUrl && !codeFromCookies)
+  Astro.cookies.set("rsvp-code", codeFromUrl);
+
+if (codeFromCookies && !codeFromUrl)
+  return Astro.redirect("/info?code=" + codeFromCookies);
+
+const code = codeFromCookies || codeFromUrl;
+
 const people = code ? await getRowsFromCode(code) : [];
 ---
 
