@@ -6,11 +6,10 @@ interface Props {
   title?: string;
   onCardClick?: string;
   blackBackground?: boolean;
-  code?: string | undefined | null;
 }
 
-const { title, onCardClick, blackBackground, code } = Astro.props;
-const currentUrl = Astro.url;
+const { title, onCardClick, blackBackground } = Astro.props;
+const code = Astro.cookies.get("rsvp-code")?.value;
 
 const duration = "0.6s";
 const rotate = {
@@ -62,7 +61,7 @@ const Container = onCardClick ? "a" : "div";
       <slot />
     </Container>
     {
-      !currentUrl.pathname.includes("login") && (
+      !Astro.url.pathname.includes("login") && (
         <div class="m-4 flex flex-col items-center justify-center gap-2 md:mt-96">
           {!code && (
             <a href={`/login`} class="rounded-xl border bg-white p-2">

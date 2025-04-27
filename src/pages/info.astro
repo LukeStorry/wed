@@ -28,7 +28,7 @@ const people = code ? await getRowsFromCode(code) : [];
 
 {
   people.length ? (
-    <Layout title="WeddingInfo" code={code}>
+    <Layout title="WeddingInfo">
       <div class="flex h-full flex-col justify-around overflow-scroll">
         <h1 class="pr-2 text-center text-2xl font-bold">Info</h1>
         <RsvpInfo people={people} />
