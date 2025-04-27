@@ -124,6 +124,10 @@ const code = codes[0];
       const button = document.querySelector("button");
       button.classList.add("!bg-gray-400");
       button.textContent = "Loading...";
+      button.disabled = true;
+      document.querySelectorAll("input").forEach((input) => {
+        input.disabled = true;
+      });
     }
   </script>
 </form>
