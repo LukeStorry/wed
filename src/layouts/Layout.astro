@@ -6,7 +6,7 @@ interface Props {
   title?: string;
   onCardClick?: string;
   blackBackground?: boolean;
-  code?: string | undefined;
+  code?: string | undefined | null;
 }
 
 const { title, onCardClick, blackBackground, code } = Astro.props;
@@ -62,14 +62,13 @@ const Container = onCardClick ? "a" : "div";
       <slot />
     </Container>
     {
-      currentUrl.pathname.includes("info") && (
-        <div class="m-4 flex justify-center md:mt-96">
-          <a
-            href={`/rsvp/${code || ""}`}
-            class="rounded-xl border bg-white p-2"
-          >
-            RSVP →
-          </a>
+      !currentUrl.pathname.includes("login") && (
+        <div class="m-4 flex flex-col items-center justify-center gap-2 md:mt-96">
+          {!code && (
+            <a href={`/login`} class="rounded-xl border bg-white p-2">
+              Info →
+            </a>
+          )}
         </div>
       )
     }

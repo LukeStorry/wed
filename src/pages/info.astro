@@ -12,14 +12,13 @@ if (codeFromUrl == "clear" || Astro.url.searchParams.get("clear"))
 
 const codeFromCookies = Astro.cookies.get("rsvp-code")?.value;
 
-if (codeFromUrl && !codeFromCookies)
+if (codeFromUrl && codeFromUrl != "clear" && !codeFromCookies)
   Astro.cookies.set("rsvp-code", codeFromUrl);
 
 if (codeFromCookies && !codeFromUrl)
   return Astro.redirect("/info?code=" + codeFromCookies);
 
-const code = codeFromCookies || codeFromUrl;
-
+const code = codeFromUrl;
 const people = code ? await getRowsFromCode(code) : [];
 ---
 
@@ -32,7 +31,7 @@ const people = code ? await getRowsFromCode(code) : [];
     <Layout title="WeddingInfo" code={code}>
       <div class="flex h-full flex-col justify-around overflow-scroll">
         <h1 class="pr-2 text-center text-2xl font-bold">Info</h1>
-        <RsvpInfo people={people} showNames />
+        <RsvpInfo people={people} />
       </div>
     </Layout>
   ) : (

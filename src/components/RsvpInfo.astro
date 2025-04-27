@@ -3,39 +3,33 @@ import { type Row } from "../utils";
 
 interface Props {
   people: Row[];
-  showNames?: boolean;
 }
 
-const { people, showNames } = Astro.props;
+const { people } = Astro.props;
 const { accommodation } = people.find((p) => !!p.accommodation) || {};
 const seeAll = people.find((p) => !!p.seeAll)?.seeAll == "yes";
 ---
 
+<div class="ml-6">
+  {
+    people.map((p) => (
+      <p>
+        {p.attending === "yes" ? "✅ " : "❌ "} {p.name}
+        {p.diet && <span class="text-sm italic"> ({p.diet.trim()})</span>}
+      </p>
+    ))
+  }
+  {people[0]?.note && <p>"{people[0].note}"</p>}
+</div>
+
 {
   people.length && people.every((p) => p.attending == "no") ? (
-    <div class="p-24">
+    <div class="mb-96 p-24">
       Sad to miss you! Lots of love and hope to see you soon!
     </div>
   ) : (
     <>
       <hr class="m-2" />
-
-      {showNames && (
-        <>
-          <div class="ml-6">
-            {people.map((p) => (
-              <p>
-                {p.attending === "yes" ? "✅ " : "❌ "} {p.name}
-                {p.diet && (
-                  <span class="text-sm italic"> ({p.diet.trim()})</span>
-                )}
-              </p>
-            ))}
-            {people[0]?.note && <p>{people[0].note}</p>}
-          </div>
-          <hr class="m-2" />
-        </>
-      )}
 
       {/* <!-- ACCOMMODATION INFO  --> */}
       {!!accommodation && (
