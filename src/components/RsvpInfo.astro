@@ -26,8 +26,12 @@ const seeAll = people.find((p) => !!p.seeAll)?.seeAll == "yes";
             {people.map((p) => (
               <p>
                 {p.attending === "yes" ? "✅ " : "❌ "} {p.name}
+                {p.diet && (
+                  <span class="text-sm italic"> ({p.diet.trim()})</span>
+                )}
               </p>
             ))}
+            {people[0]?.note && <p>{people[0].note}</p>}
           </div>
           <hr class="m-2" />
         </>

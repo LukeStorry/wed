@@ -16,6 +16,7 @@ if (Astro.request.method === "POST") {
   const formData = await Astro.request.formData();
 
   await handleUpdateForm(formData);
+  return Astro.redirect("/info");
 }
 
 const people = await getRowsFromCode(code);
