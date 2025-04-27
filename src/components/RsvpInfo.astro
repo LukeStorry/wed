@@ -20,7 +20,13 @@ const seeAll = people.find((p) => !!p.seeAll)?.seeAll == "yes";
       </p>
     ))
   }
-  {people[0]?.note && <p>"{people[0].note}"</p>}
+  {
+    people[0]?.note && (
+      <p class="w-64 rounded bg-gray-200 p-2 text-sm">
+        "{people[0].note.trim()}"
+      </p>
+    )
+  }
 </div>
 
 {
