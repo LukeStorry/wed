@@ -66,19 +66,22 @@ export async function getCodeFromName(name: string): Promise<string | null> {
 
 export const getFoodOrders = async (): Promise<FoodOrder[]> => {
   const rows = await getData().then((r) =>
-    r.filter((r) => r.get("code")).map(transformRow),
+    r.filter((r) => r.get("code")).map(rowToRow),
   );
+
   return rows
     .filter((r) => r.attending === "yes" && r.seeAll == "yes")
     .sort((a, b) => a.name.localeCompare(b.name))
-    .map((r) => ({
-      name: r.name,
-      foodOrder: JSON.parse(r.foodOrder ?? "[]"),
-      code: r.code,
-    }));
+    .map(rowToFoodOrder);
 };
 
-function transformRow(r: GoogleSpreadsheetRow<Row>): Row {
+const rowToFoodOrder = (r: Row): FoodOrder => ({
+  name: r.name,
+  foodOrder: JSON.parse(r.foodOrder ?? "[]"),
+  code: r.code,
+});
+
+function rowToRow(r: GoogleSpreadsheetRow<Row>): Row {
   const row = r.toObject();
   // Let's just validate the data before returning it, for FE sanity
   const check = schema.safeParse(row);
@@ -95,10 +98,11 @@ export async function getRowsFromCode(code: string): Promise<Row[]> {
   const applicable = rows.filter((r) => r.get("code") === code);
   if (applicable.length === 0) return [];
 
-  return applicable.map(transformRow);
+  return applicable.map(rowToRow);
 }
 
-async function updateFoodOrder(data: FoodOrder): Promise<Row> {
+async function updateFoodOrder(data: FoodOrder): Promise<FoodOrder> {
+  console.log("updateFoodOrder", data);
   const rows = await getData();
   const row = rows.find(
     (r) => r.get("name") === data.name && r.get("code") === data.code,
@@ -106,7 +110,7 @@ async function updateFoodOrder(data: FoodOrder): Promise<Row> {
   if (!row) throw new Error(`Row for ${data.name} not found`);
   row.set("foodOrder", JSON.stringify(data.foodOrder ?? []));
   await row.save();
-  return row.toObject() as Row;
+  return rowToFoodOrder(rowToRow(row));
 }
 
 export async function handleUpdateForm(formData: FormData): Promise<FoodOrder> {
