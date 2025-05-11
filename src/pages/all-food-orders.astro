@@ -5,6 +5,8 @@ import _ from "lodash";
 const orders = (await getFoodOrders())
   .filter((o) => o.foodOrder.length > 0)
   .toSorted((a, b) => a.code.localeCompare(b.code));
+
+const showPrices = Astro.url.searchParams.get("prices");
 ---
 
 <Layout title="All Food Orders">
@@ -15,8 +17,9 @@ const orders = (await getFoodOrders())
         orders.map((order) => (
           <div>
             <p class="font-bold">
-              {order.name} - £
-              {_.sumBy(order.foodOrder, (item) => item.price).toFixed(2)}
+              {order.name}
+              {showPrices &&
+                ` - £${_.sumBy(order.foodOrder, (item) => item.price).toFixed(2)}`}
             </p>
             {order.foodOrder
               .toSorted((a) => (a.item.includes("Pasty") ? -1 : 1))
