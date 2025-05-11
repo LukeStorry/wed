@@ -1,0 +1,29 @@
+---
+import Layout from "../layouts/Layout.astro";
+import FoodOrderForm from "../components/FoodOrderForm";
+import { getFoodOrders, getRowsFromCode, handleUpdateForm } from "../utils";
+import { menu } from "../menu";
+
+const codeFromCookies = Astro.cookies.get("rsvp-code")?.value;
+
+let orders = await getFoodOrders();
+if (codeFromCookies) {
+  const people = await getRowsFromCode(codeFromCookies);
+  orders = orders.filter((o) => people.some((p) => p.name === o.name));
+}
+
+if (Astro.request.method === "POST") {
+  console.log("Food POST Received");
+  const rawFormData = await Astro.request.formData();
+  await handleUpdateForm(rawFormData);
+  return Astro.redirect("/food");
+}
+---
+
+<Layout title="Food Order">
+  <div class="flex h-full flex-col justify-around overflow-scroll">
+    <h1 class="pr-2 text-center text-2xl font-bold">Food Order</h1>
+
+    <FoodOrderForm client:load orders={orders} menu={menu} />
+  </div>
+</Layout>

@@ -2,6 +2,7 @@ import { JWT } from "google-auth-library";
 import { GoogleSpreadsheet, GoogleSpreadsheetRow } from "google-spreadsheet";
 import _ from "lodash";
 import { z } from "zod";
+import type { menu } from "./menu";
 
 const { SPREADSHEET_ID, GOOGLE_SERVICE_ACCOUNT_EMAIL, GOOGLE_PRIVATE_KEY } =
   import.meta.env;
@@ -14,7 +15,22 @@ const schema = z.object({
   accommodation: z.string().optional(),
   seeAll: z.string().optional(),
   note: z.string().optional(),
+  foodOrder: z.string().optional(),
 });
+
+const foodSchema = z.object({
+  name: z.string().min(2),
+  code: z.string().min(5),
+  foodOrder: z
+    .array(
+      z.object({
+        item: z.string(),
+        price: z.number(),
+      }),
+    )
+    .default([]),
+});
+export type FoodOrder = z.infer<typeof foodSchema>;
 
 export type Row = z.infer<typeof schema>;
 
@@ -48,58 +64,73 @@ export async function getCodeFromName(name: string): Promise<string | null> {
   return row?.get("code") ?? null;
 }
 
+export const getFoodOrders = async (): Promise<FoodOrder[]> => {
+  const rows = await getData().then((r) =>
+    r.filter((r) => r.get("code")).map(transformRow),
+  );
+  return rows
+    .filter((r) => r.attending === "yes" && r.seeAll == "yes")
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .map((r) => ({
+      name: r.name,
+      foodOrder: JSON.parse(r.foodOrder ?? "[]"),
+      code: r.code,
+    }));
+};
+
+function transformRow(r: GoogleSpreadsheetRow<Row>): Row {
+  const row = r.toObject();
+  // Let's just validate the data before returning it, for FE sanity
+  const check = schema.safeParse(row);
+  if (!check.success)
+    throw new Error(`Bad Sheet Data!? ${JSON.stringify(r.toObject())}`, {
+      cause: check.error.format(),
+    });
+
+  return check.data;
+}
+
 export async function getRowsFromCode(code: string): Promise<Row[]> {
   const rows = await getData();
   const applicable = rows.filter((r) => r.get("code") === code);
   if (applicable.length === 0) return [];
 
-  return applicable.map((r) => {
-    const row = r.toObject();
-
-    // Let's just validate the data before returning it, for FE sanity
-    const check = schema.safeParse(row);
-    if (!check.success)
-      throw new Error(`Bad Sheet Data!? ${JSON.stringify(r.toObject())}`, {
-        cause: check.error.format(),
-      });
-
-    return check.data;
-  });
+  return applicable.map(transformRow);
 }
 
-async function updateRow(data: Row): Promise<void> {
+async function updateFoodOrder(data: FoodOrder): Promise<void> {
   const rows = await getData();
   const row = rows.find(
-    (r) => r.get("code") === data.code && r.get("name") === data.name,
+    (r) => r.get("name") === data.name && r.get("code") === data.code,
   );
   if (!row) throw new Error(`Row for ${data.name} not found`);
-  row.assign(data);
+  row.set("foodOrder", JSON.stringify(data.foodOrder ?? []));
   await row.save();
 }
 
-export async function handleUpdateForm(formData: FormData): Promise<void> {
+export async function handleUpdateForm(formData: FormData): Promise<FoodOrder> {
   console.log(formData);
 
-  // We've got multiple objects with prepended indexes, so unpack into objects
-  const keyValuePairs = [...formData.entries()];
+  const name = formData.get("name") as string;
+  const code = formData.get("code") as string;
+  const foodOrder = (formData.getAll("foodOrder") as string[]).map((item) => ({
+    item: item.split(":")[0]!,
+    price: parseFloat(item.split(":")[1]!),
+  }));
 
-  const updates: object[] = [];
-  // keys of type 0.name and 0.attending will be on objects, `accommodation` will be on parent
-  keyValuePairs.forEach(([k, v]) => _.set(updates, k, v));
-  console.log(updates);
+  const value = {
+    code,
+    name,
+    foodOrder,
+  };
 
-  for (const update of updates) {
-    const result = schema.safeParse({ ...update, ...updates });
+  const result = foodSchema.safeParse(value);
 
-    if (!result.success) {
-      console.error(update);
-      throw new Error("Bad FormData?", { cause: result.error.format() });
-    }
-
-    if (result.data.attending != "yes") {
-      result.data.accommodation = "";
-      result.data.diet = "";
-    }
-    await updateRow(result.data);
+  if (!result.success) {
+    console.error(value);
+    throw new Error("Bad Food FormData?", { cause: result.error.format() });
   }
+
+  await updateFoodOrder(result.data);
+  return result.data;
 }

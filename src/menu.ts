@@ -1,0 +1,53 @@
+// Menu data organized by sections
+
+export const menu: Record<string, { item: string; price: number }[]> = {
+  Vegan: [
+    { item: "Sausage (Ve)", price: 1.95 },
+    { item: "Chick N Strips 5 (Ve)", price: 7.95 },
+    { item: "Steak & Onion Pie (Ve)", price: 4.95 },
+    { item: "Chicken & Mush Pie (Ve)", price: 4.25 },
+    { item: "Fishless Flippers (Ve)", price: 7.95 },
+  ],
+  Pasties: [
+    { item: "Traditional Steak Cornish Pasty", price: 3 },
+    { item: "Small Traditional Steak Cornish Pasty", price: 3 },
+    { item: "Medium Traditional Steak Cornish Pasty", price: 3 },
+    { item: "Giant Traditional Steak Cornish Pasty", price: 3 },
+    { item: "Beef & Stilton Pasty", price: 3 },
+    { item: "Cheese & Bacon Pasty", price: 3 },
+    { item: "Cheese, Ham & Leek Pasty", price: 3 },
+    { item: "Chicken & Chorizo Pasty", price: 3 },
+    { item: "Creamy Chicken Pasty", price: 3 },
+    { item: "Chilli Beef & Cheese Pasty", price: 3 },
+    { item: "Full English Breakfast Pasty", price: 3 },
+    { item: "Lamb & Mint Pasty", price: 3 },
+    { item: "Pork & Apple Pasty", price: 3 },
+    { item: "Spicy Chicken Pasty", price: 3 },
+    { item: "Steak & Ale Pasty", price: 3 },
+    { item: "Steak and Gravy Pasty", price: 3 },
+    { item: "Vegan Vegetable Pasty", price: 3 },
+    { item: "Vegan Wholemeal Vegetable Pasty", price: 3 },
+    { item: "Vegan Spicy Vegetable Pasty", price: 3 },
+    { item: "Vegan Moroccan Chickpea & Sweet Potato Pasty", price: 3 },
+    { item: "Vegan Apple & Blackcurrant Pasty", price: 3 },
+    { item: "Vegetarian Cheese & Onion Pasty", price: 3 },
+    { item: "Vegetarian Broccoli, Cheese & Sweetcorn Pasty", price: 3 },
+    { item: "Vegetarian Spinach & Ricotta Pasty", price: 3 },
+    { item: "Vegetarian Vegetable Pasty", price: 3 },
+    { item: "Vegetarian Wholemeal Vegetable Pasty", price: 3 },
+    { item: "Vegetarian Spicy Vegetable Pasty", price: 3 },
+    { item: "Vegetarian Moroccan Chickpea & Sweet Potato Pasty", price: 3 },
+  ],
+  Chips: [
+    { item: "Small Chips", price: 3.4 },
+    { item: "Large Chips", price: 4.55 },
+    { item: "Small Chips with Cheese", price: 5.4 },
+    { item: "Large Chips with Cheese", price: 6.85 },
+    { item: "Curly Fries", price: 5.2 },
+    { item: "Curly Fries with Cheese", price: 7.4 },
+    { item: "Sweet Pot Fries", price: 5.2 },
+    { item: "Cheesy Sweet Pot Fries", price: 7.4 },
+  ],
+};
+
+export type Menu = typeof menu;
