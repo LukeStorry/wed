@@ -31,30 +31,6 @@ export default function FoodOrderForm({
       className="flex flex-col gap-4 p-4"
       onSubmit={() => setLoading(true)}
     >
-      <p>
-        Friday night will be fish and chips, menu available{" "}
-        <a
-          className="text-green-600 underline"
-          href="https://theplaiceex23.touchtakeaway.net/menu"
-          target="_blank"
-        >
-          here
-        </a>
-        .
-      </p>
-      <p>
-        Saturday lunch will be pasties, menu available{" "}
-        <a
-          className="text-green-600 underline"
-          href="https://tastypasties.co.uk/pasties-html/"
-          target="_blank"
-        >
-          here
-        </a>
-        . This will Be Saturday Lunch
-      </p>
-      <p>BYOB for these meals, but corkage fees from 3pm Saturday onwards</p>
-
       <div className="mb-4">
         <label htmlFor="name" className="mb-2 block font-bold">
           Your Name:

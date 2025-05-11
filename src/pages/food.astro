@@ -29,6 +29,29 @@ const orders = await getFoodOrders();
   <div class="flex h-full flex-col justify-around overflow-scroll">
     <h1 class="pr-2 text-center text-2xl font-bold">Food Order</h1>
 
+    <div class="m-2 flex flex-col gap-2 rounded border p-2 text-sm">
+      <p>
+        Friday night will be fish and chips, menu available{" "}
+        <a
+          class="text-green-600 underline"
+          href="https://theplaiceex23.touchtakeaway.net/menu"
+          target="_blank"
+        >
+          here</a
+        >.
+      </p>
+      <p>
+        Saturday lunch will be pasties, menu available{" "}
+        <a
+          class="text-green-600 underline"
+          href="https://tastypasties.co.uk/pasties-html/"
+          target="_blank"
+        >
+          here</a
+        >.
+      </p>
+      <p>BYOB for these meals, but corkage fees from 3pm Saturday onwards.</p>
+    </div>
     <FoodOrderForm
       client:load
       orders={orders}
