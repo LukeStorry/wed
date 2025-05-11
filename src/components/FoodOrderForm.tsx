@@ -122,7 +122,7 @@ export default function FoodOrderForm({
 
       <button
         type="submit"
-        className="mb-16 rounded-lg bg-gray-100 p-3 font-bold text-green-600 hover:bg-green-700 hover:text-white disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400"
+        className="mb-16 w-fit rounded-lg bg-green-800 p-3 font-bold text-white hover:bg-green-600 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400"
         disabled={disabled}
         onClick={() => {
           alert(
