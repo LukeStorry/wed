@@ -38,8 +38,9 @@ export default function FoodOrderForm({
         <input
           name="name"
           id="name"
-          className="w-full rounded border p-2"
+          className="rounded border p-2"
           value={formState.name}
+          autoComplete="name"
           onChange={(e) => {
             setFormState((prev) => ({ ...prev, name: e.target.value }));
           }}
