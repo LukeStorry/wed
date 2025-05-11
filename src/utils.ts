@@ -27,6 +27,7 @@ const foodSchema = z.object({
         price: z.number(),
       }),
     )
+    .optional()
     .default([]),
 });
 export type FoodOrder = z.infer<typeof foodSchema>;
@@ -97,7 +98,7 @@ export async function getRowsFromCode(code: string): Promise<Row[]> {
   return applicable.map(transformRow);
 }
 
-async function updateFoodOrder(data: FoodOrder): Promise<void> {
+async function updateFoodOrder(data: FoodOrder): Promise<Row> {
   const rows = await getData();
   const row = rows.find(
     (r) => r.get("name") === data.name && r.get("code") === data.code,
@@ -105,6 +106,7 @@ async function updateFoodOrder(data: FoodOrder): Promise<void> {
   if (!row) throw new Error(`Row for ${data.name} not found`);
   row.set("foodOrder", JSON.stringify(data.foodOrder ?? []));
   await row.save();
+  return row.toObject() as Row;
 }
 
 export async function handleUpdateForm(formData: FormData): Promise<FoodOrder> {
@@ -130,6 +132,5 @@ export async function handleUpdateForm(formData: FormData): Promise<FoodOrder> {
     throw new Error("Bad Food FormData?", { cause: result.error.format() });
   }
 
-  await updateFoodOrder(result.data);
-  return result.data;
+  return await updateFoodOrder(result.data);
 }
