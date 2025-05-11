@@ -20,12 +20,17 @@ export default function FoodOrderForm({
     },
   );
 
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const disabled = !orders.some((o) => o.name === formState.name);
+  const disabled = loading || !orders.some((o) => o.name === formState.name);
 
   return (
-    <form method="POST" className="flex flex-col gap-4 p-4">
+    <form
+      method="POST"
+      className="flex flex-col gap-4 p-4"
+      onSubmit={() => setLoading(true)}
+    >
       <p>
         Friday night will be fish and chips, menu available{" "}
         <a
@@ -124,13 +129,8 @@ export default function FoodOrderForm({
         type="submit"
         className="mb-16 w-fit rounded-lg bg-green-700 p-3 font-bold text-white hover:bg-green-800 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400"
         disabled={disabled}
-        onClick={() => {
-          alert(
-            `Saved! ${formState.foodOrder.map((item) => item.item).join(", ")}`,
-          );
-        }}
       >
-        Submit Order
+        {loading ? "Submitting..." : "Submit Order"}
       </button>
     </form>
   );

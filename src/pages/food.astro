@@ -6,20 +6,23 @@ import { menu } from "../menu";
 
 const codeFromCookies = Astro.cookies.get("rsvp-code")?.value;
 
-let orders = await getFoodOrders();
 let initialName = undefined;
+let result = null;
+
 if (codeFromCookies) {
   const people = await getRowsFromCode(codeFromCookies);
-  orders = orders.filter((o) => people.some((p) => p.name === o.name));
-  initialName = orders.length === 1 ? orders[0]?.name : undefined;
+  initialName = people.length === 1 ? people[0]?.name : undefined;
 }
 
 if (Astro.request.method === "POST") {
   console.log("Food POST Received");
   const rawFormData = await Astro.request.formData();
-  const result = await handleUpdateForm(rawFormData);
+  result = await handleUpdateForm(rawFormData);
+  Astro.cookies.set("rsvp-code", result.code);
   if (result.name) initialName = result.name;
 }
+
+const orders = await getFoodOrders();
 ---
 
 <Layout title="Food Order">
@@ -34,3 +37,9 @@ if (Astro.request.method === "POST") {
     />
   </div>
 </Layout>
+
+<script define:vars={{ result }}>
+  if (result) {
+    alert(`Saved! ${result.foodOrder.map((item) => item.item).join(", ")}`);
+  }
+</script>
