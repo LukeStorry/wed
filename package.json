@@ -12,13 +12,13 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@astrojs/check": "^0.5.10",
+    "@astrojs/check": "^0.9.4",
     "@astrojs/react": "^4.2.7",
-    "@astrojs/tailwind": "^5.1.0",
-    "@astrojs/vercel": "^7.5.3",
+    "@astrojs/tailwind": "^6.0.2",
+    "@astrojs/vercel": "^8.1.4",
     "@fontsource/arvo": "^5.0.18",
     "@tailwindcss/forms": "^0.5.9",
-    "astro": "^4.6.1",
+    "astro": "^5.7.12",
     "google-auth-library": "^9.14.1",
     "google-spreadsheet": "^4.1.4",
     "lodash": "^4.17.21",

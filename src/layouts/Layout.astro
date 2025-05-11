@@ -1,6 +1,6 @@
 ---
 import "@fontsource/arvo";
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 
 interface Props {
   title?: string;
@@ -44,7 +44,7 @@ const Container = onCardClick ? "a" : "div";
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="generator" content={Astro.generator} />
     <title>Luke & Marnie's wedding {title ? ` - ${title}` : null}</title>
-    <ViewTransitions />
+    <ClientRouter />
   </head>
   <body
     class="flex h-svh w-screen min-w-[280px] flex-col items-center justify-center bg-green-800 p-4 sm:p-8 md:flex-row"
