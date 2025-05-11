@@ -2,7 +2,6 @@ import { JWT } from "google-auth-library";
 import { GoogleSpreadsheet, GoogleSpreadsheetRow } from "google-spreadsheet";
 import _ from "lodash";
 import { z } from "zod";
-import type { menu } from "./menu";
 
 const { SPREADSHEET_ID, GOOGLE_SERVICE_ACCOUNT_EMAIL, GOOGLE_PRIVATE_KEY } =
   import.meta.env;

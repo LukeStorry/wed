@@ -7,16 +7,18 @@ import { menu } from "../menu";
 const codeFromCookies = Astro.cookies.get("rsvp-code")?.value;
 
 let orders = await getFoodOrders();
+let initialName = undefined;
 if (codeFromCookies) {
   const people = await getRowsFromCode(codeFromCookies);
   orders = orders.filter((o) => people.some((p) => p.name === o.name));
+  initialName = orders.length === 1 ? orders[0]?.name : undefined;
 }
 
 if (Astro.request.method === "POST") {
   console.log("Food POST Received");
   const rawFormData = await Astro.request.formData();
-  await handleUpdateForm(rawFormData);
-  return Astro.redirect("/food");
+  const result = await handleUpdateForm(rawFormData);
+  if (result.name) initialName = result.name;
 }
 ---
 
@@ -24,6 +26,11 @@ if (Astro.request.method === "POST") {
   <div class="flex h-full flex-col justify-around overflow-scroll">
     <h1 class="pr-2 text-center text-2xl font-bold">Food Order</h1>
 
-    <FoodOrderForm client:load orders={orders} menu={menu} />
+    <FoodOrderForm
+      client:load
+      orders={orders}
+      menu={menu}
+      initialName={initialName}
+    />
   </div>
 </Layout>
