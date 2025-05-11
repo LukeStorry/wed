@@ -73,9 +73,7 @@ export const menu: Record<string, { item: string; price: number }[]> = {
   ],
 
   "Saturday - Pasties": [
-    { item: "Small Traditional Steak Cornish Pasty", price: 3 },
     { item: "Medium Traditional Steak Cornish Pasty", price: 3 },
-    { item: "Giant Traditional Steak Cornish Pasty", price: 3 },
     { item: "Beef & Stilton Pasty", price: 3 },
     { item: "Cheese & Bacon Pasty", price: 3 },
     { item: "Cheese, Ham & Leek Pasty", price: 3 },
