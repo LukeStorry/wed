@@ -2,7 +2,7 @@ import defaultTheme from "tailwindcss/defaultTheme";
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./src/**/**/*.astro"],
+  content: ["./src/**/**/*.astro", "./src/**/**/*.tsx"],
   plugins: [require("@tailwindcss/forms")],
   theme: {
     extend: {
