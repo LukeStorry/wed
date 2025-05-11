@@ -22,7 +22,7 @@ const code = codeFromUrl;
 const people = code ? await getRowsFromCode(code) : [];
 ---
 
-<script define:vars={{ people, code }}>
+<script define:vars={{ people, code }} is:inline>
   console.log(code, JSON.stringify(people, null, 2));
 </script>
 
