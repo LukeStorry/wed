@@ -40,6 +40,12 @@ const orders = await getFoodOrders();
 
 <script define:vars={{ result }} is:inline>
   if (result) {
-    alert(`Saved! ${result.foodOrder.map((item) => item.item).join(", ")}`);
+    if (result?.foodOrder.length) {
+      alert(`Saved! ${result.foodOrder.map((item) => item.item).join(", ")}`);
+    } else {
+      alert(
+        "Either you selected no food or something has gone wrong - please text Luke"
+      );
+    }
   }
 </script>
