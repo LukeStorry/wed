@@ -1,5 +1,5 @@
 ---
-import { type Row } from "../utils";
+import { type FoodOrder, type Row } from "../utils";
 
 interface Props {
   people: Row[];
@@ -17,6 +17,13 @@ const seeAll = people.find((p) => !!p.seeAll)?.seeAll == "yes";
         {p.attending === "yes" ? "✅ " : p.attending === "no" ? "❌ " : "❓ "}
         {p.name}
         {p.diet && <span class="text-sm italic"> ({p.diet.trim()})</span>}
+        {p.foodOrder && (
+          <p class="pl-4 text-xs">
+            {`(${(JSON.parse(p.foodOrder) as FoodOrder["foodOrder"])
+              .map((item) => item.item)
+              .join(", ")})`}
+          </p>
+        )}
       </p>
     ))
   }
