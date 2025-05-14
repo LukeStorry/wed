@@ -7,27 +7,74 @@ const orders = (await getFoodOrders())
   .toSorted((a, b) => a.code.localeCompare(b.code));
 
 const showPrices = Astro.url.searchParams.get("prices");
+const perPerson = Astro.url.searchParams.get("perPerson");
+const [allPasties, allChippies] = _.partition(
+  _.flatMap(orders, (o) => o.foodOrder),
+  (i) => i.item.includes("Pasty")
+);
 ---
 
 <Layout title="All Food Orders">
-  <div class="flex h-full flex-col justify-around overflow-scroll">
+  <div class="h-full overflow-scroll">
     <h1 class="pr-2 text-center text-2xl font-bold">All Food Orders</h1>
-    <div class="flex flex-col gap-4">
+
+    <a
+      href={perPerson ? "?" : "?perPerson=true"}
+      class="m-2 my-4 rounded bg-green-700 p-2 text-xs text-white"
+    >
+      {perPerson ? "All Orders" : "Per Person"}
+    </a>
+
+    <div class="flex flex-col gap-4 p-4">
       {
-        orders.map((order) => (
-          <div>
-            <p class="font-bold">
-              {order.name}
-              {showPrices &&
-                ` - £${_.sumBy(order.foodOrder, (item) => item.price).toFixed(2)}`}
-            </p>
-            {order.foodOrder
-              .toSorted((a) => (a.item.includes("Pasty") ? -1 : 1))
-              .map((item) => (
-                <p class="pl-4 text-sm">{item.item}</p>
-              ))}
-          </div>
-        ))
+        perPerson ? (
+          orders.map((order) => (
+            <div>
+              <p class="font-bold">
+                {order.name}
+                {showPrices &&
+                  ` - £${_.sumBy(order.foodOrder, (item) => item.price).toFixed(2)}`}
+              </p>
+              {order.foodOrder
+                .toSorted((a) => (a.item.includes("Pasty") ? -1 : 1))
+                .map((item) => (
+                  <p class="pl-4 text-sm">{item.item}</p>
+                ))}
+            </div>
+          ))
+        ) : (
+          <>
+            <div>
+              <h2 class="mb-2 text-xl font-bold">The Plaice Order</h2>
+              {Object.entries(_.countBy(allChippies, (i) => i.item)).map(
+                ([item, count]) => (
+                  <p class="pl-4">
+                    {count}x {item}
+                  </p>
+                )
+              )}
+              <p class="mt-2 pl-2 font-bold">
+                Total Items: {allChippies.length} - £
+                {_.sumBy(allChippies, (item) => item.price).toFixed(2)}
+              </p>
+            </div>
+            <hr />
+            <div>
+              <h2 class="mb-2 text-xl font-bold">Pasty Order</h2>
+              {Object.entries(_.countBy(allPasties, (i) => i.item)).map(
+                ([item, count]) => (
+                  <p class="pl-4">
+                    {count}x {item}
+                  </p>
+                )
+              )}
+              <p class="mt-2 pl-2 font-bold">
+                Total Pasties: {allPasties.length}
+                {` - £${_.sumBy(allPasties, (item) => item.price)}`}
+              </p>
+            </div>
+          </>
+        )
       }
     </div>
   </div>
