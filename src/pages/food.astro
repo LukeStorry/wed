@@ -18,6 +18,7 @@ if (Astro.request.method === "POST") {
   console.log("Food POST Received");
   const rawFormData = await Astro.request.formData();
   result = await handleUpdateForm(rawFormData);
+  console.warn(rawFormData);
   Astro.cookies.set("rsvp-code", result.code);
   if (result.name) initialName = result.name;
 }
