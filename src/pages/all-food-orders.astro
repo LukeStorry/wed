@@ -3,7 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import { getFoodOrders } from "../utils";
 import _ from "lodash";
 const orders = (await getFoodOrders()).toSorted((a, b) =>
-  a.code.localeCompare(b.code)
+  a.name.localeCompare(b.name)
 );
 
 const showPrices = Astro.url.searchParams.get("prices");
