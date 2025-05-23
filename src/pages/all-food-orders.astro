@@ -2,9 +2,9 @@
 import Layout from "../layouts/Layout.astro";
 import { getFoodOrders } from "../utils";
 import _ from "lodash";
-const orders = (await getFoodOrders())
-  .filter((o) => o.foodOrder.length > 0)
-  .toSorted((a, b) => a.code.localeCompare(b.code));
+const orders = (await getFoodOrders()).toSorted((a, b) =>
+  a.code.localeCompare(b.code)
+);
 
 const showPrices = Astro.url.searchParams.get("prices");
 const perPerson = Astro.url.searchParams.get("perPerson");
