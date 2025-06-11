@@ -1,6 +1,9 @@
-// Menu data organized by sections
+type MenuItem = {
+  item: string;
+  price: number;
+};
 
-export const menu: Record<string, { item: string; price: number }[]> = {
+export const menu = {
   "Friday - Mains": [
     { item: "Small Cod (Mini)", price: 7.95 },
     { item: "Regular Cod", price: 8.95 },
@@ -100,6 +103,6 @@ export const menu: Record<string, { item: string; price: number }[]> = {
     { item: "Moroccan Chickpea & Sweet Potato Pasty", price: 3 },
     { item: "Gluten Free Traditional Steak Cornish Pasty", price: 3 },
   ],
-};
+} as const satisfies Record<string, MenuItem[]>;
 
 export type Menu = typeof menu;

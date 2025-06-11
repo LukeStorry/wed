@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { getFoodOrders } from "../utils";
+import { menu } from "../menu";
 import _ from "lodash";
 const orders = (await getFoodOrders()).toSorted((a, b) =>
   a.name.localeCompare(b.name)
@@ -8,10 +9,11 @@ const orders = (await getFoodOrders()).toSorted((a, b) =>
 
 const showPrices = Astro.url.searchParams.get("prices");
 const perPerson = Astro.url.searchParams.get("perPerson");
-const [allPasties, allChippies] = _.partition(
-  _.flatMap(orders, (o) => o.foodOrder),
-  (i) => i.item.includes("Pasty")
+const allFoodItems = _.flatMap(orders, (o) => o.foodOrder);
+const [allPasties, allChippies] = _.partition(allFoodItems, (i) =>
+  i.item.includes("Pasty")
 );
+const foodCounts = _.countBy(allFoodItems, (i) => i.item);
 ---
 
 <Layout title="All Food Orders">
@@ -46,12 +48,13 @@ const [allPasties, allChippies] = _.partition(
           <>
             <div>
               <h2 class="mb-2 text-xl font-bold">The Plaice Order</h2>
-              {Object.entries(_.countBy(allChippies, (i) => i.item)).map(
-                ([item, count]) => (
-                  <p class="pl-4">
-                    {count}x {item}
-                  </p>
-                )
+              {[...menu["Friday - Mains"], ...menu["Friday - Sides"]].map(
+                ({ item }) =>
+                  foodCounts[item] ? (
+                    <p class="pl-4">
+                      {foodCounts[item]}x {item}
+                    </p>
+                  ) : null
               )}
               <p class="mt-2 pl-2 font-bold">
                 Total Items: {allChippies.length} - £
@@ -61,12 +64,12 @@ const [allPasties, allChippies] = _.partition(
             <hr />
             <div>
               <h2 class="mb-2 text-xl font-bold">Pasty Order</h2>
-              {Object.entries(_.countBy(allPasties, (i) => i.item)).map(
-                ([item, count]) => (
+              {menu["Saturday - Pasties"].map(({ item }) =>
+                foodCounts[item] ? (
                   <p class="pl-4">
-                    {count}x {item}
+                    {foodCounts[item]}x {item}
                   </p>
-                )
+                ) : null
               )}
               <p class="mt-2 pl-2 font-bold">
                 Total Pasties: {allPasties.length}
